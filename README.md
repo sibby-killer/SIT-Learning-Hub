@@ -6,7 +6,7 @@ The product combines structured academic learning, written-answer assessment, a 
 
 ## Project status
 
-**Phase 0 - Audit and specification: in progress.** The repository is currently greenfield: it contains the master PRD and the Phase 0 documentation pack. No application code, database, authentication, or AI integration exists yet. Implementation starts only after the plan is approved.
+**Phase 0 - Audit and specification: complete, awaiting approval.** The repository is currently greenfield: it contains the master PRD and the Phase 0 documentation pack. No application code, database, authentication, or AI integration exists yet. Implementation starts only after the plan is approved.
 
 See [docs/IMPLEMENTATION-STATUS.md](docs/IMPLEMENTATION-STATUS.md) for the feature-by-feature checklist.
 

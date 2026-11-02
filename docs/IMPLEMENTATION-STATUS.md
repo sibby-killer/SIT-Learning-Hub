@@ -26,7 +26,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 
 | Phase | Scope | Status | Gate / notes |
 | --- | --- | --- | --- |
-| 0 | Audit, checklist, architecture, setup, API-key guide, content-source record | **In progress** | Awaiting user approval; docs committed/pushed after review |
+| 0 | Audit, checklist, architecture, setup, API-key guide, content-source record | **Implemented - awaiting approval** | Docs committed and pushed (`b480fb7`); implementation not started |
 | 1 | Foundation: scaffold, design system, env, DB, auth, roles, CI | Not started | Needs Clerk + Turso keys and stack approval |
 | 2 | Curriculum management | Not started | Official MMUST curriculum needed for real data; draft pilot possible |
 | 3 | Learning experience | Not started | Pilot content needed |
@@ -54,7 +54,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | P0-06 | Setup/development guide | Implemented | [SETUP.md](SETUP.md) |
 | P0-07 | Content-source verification record | Implemented | [CONTENT-SOURCES.md](CONTENT-SOURCES.md) |
 | P0-08 | Git repository initialized with remote | Implemented | Local `main`; `origin` configured |
-| P0-09 | Phase 0 commit pushed to GitHub | Not started | Pending commit/push verification |
+| P0-09 | Phase 0 commit pushed to GitHub | Implemented | Commit `b480fb7` on `origin/main`; verified via `git ls-remote` and GitHub API |
 | P0-10 | User approval of decisions | **Blocked** | Awaiting response to [AUDIT.md](AUDIT.md) section 11 |
 
 ---
@@ -285,7 +285,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | QLT-06 | Accessibility review (WCAG 2.2 AA target) | 11 | Not started | axe + manual |
 | QLT-07 | Performance review | 11 | Not started | Budgets |
 | QLT-08 | Production build and deployment verification | 11 | Not started | Vercel |
-| QLT-09 | Documentation maintained every phase | 0+ | In progress | Phase 0 docs created |
+| QLT-09 | Documentation maintained every phase | 0+ | Implemented | Phase 0 docs created and pushed |
 | QLT-10 | Monitoring/backups/runbook | 11 | Not started | Optional Sentry |
 
 ---
@@ -357,7 +357,7 @@ All tests are **Not started** because no application code exists.
 
 | Phase | Completed on | Commit | Tests | Notes |
 | --- | --- | --- | --- | --- |
-| 0 | Pending approval | Pending push | Documentation review only | No app code |
+| 0 | 2026-11-02 | `b480fb7` | Documentation/link check; no application tests (no app code) | Pushed to `origin/main`; awaiting user approval |
 
 ---
 
