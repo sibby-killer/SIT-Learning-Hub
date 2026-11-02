@@ -27,7 +27,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | Phase | Scope | Status | Gate / notes |
 | --- | --- | --- | --- |
 | 0 | Audit, checklist, architecture, setup, API-key guide, content-source record | **Implemented - approved** | Docs committed and pushed (`b480fb7`); user approved all recommended decisions |
-| 1 | Foundation: scaffold, design system, env, DB, auth, roles, CI | **Implemented - live auth pending keys** | Scaffold, schema, migration, auth integration, tests, and CI are in place; sign-in needs Clerk + Turso keys |
+| 1 | Foundation: scaffold, design system, env, DB, auth, roles, CI | **Implemented - live auth pending keys** | Scaffold, schema, migration, auth integration, tests, and CI are in place (`e75f2ae`); sign-in needs Clerk + Turso keys |
 | 2 | Curriculum management | Not started | Official MMUST curriculum needed for real data; draft pilot possible |
 | 3 | Learning experience | Not started | Pilot content needed |
 | 4 | Assessment engine and progression | Not started | Groq key for live AI grading; fake provider for tests |
@@ -373,7 +373,7 @@ Domain workflows are **Not started**. Phase 1 has a landing-page/health smoke te
 | Phase | Completed on | Commit | Tests | Notes |
 | --- | --- | --- | --- | --- |
 | 0 | 2026-11-02 | `b480fb7` | Documentation/link check; no application tests (no app code) | Pushed to `origin/main`; user approved all recommended decisions |
-| 1 | 2026-11-02 | `pending` | Typecheck, lint, 9 unit tests, production build, 2 Playwright smoke tests | Live sign-in pending Turso/Clerk keys; commit/tag recorded after push |
+| 1 | 2026-11-02 | `e75f2ae` | Typecheck, lint, 9 unit tests, production build, 2 Playwright smoke tests | Live sign-in pending Turso/Clerk keys; tagged `phase-1` |
 
 ---
 
