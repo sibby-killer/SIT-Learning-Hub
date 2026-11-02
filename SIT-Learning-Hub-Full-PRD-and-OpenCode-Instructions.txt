@@ -1,0 +1,2218 @@
+# SIT LEARNING HUB
+# FULL PRODUCT REQUIREMENTS DOCUMENT (PRD)
+# AND MASTER IMPLEMENTATION INSTRUCTIONS FOR OPENCODE
+
+Document type Product Requirements Document + Technical Specification + AI Agent Instructions  
+Product name SIT Learning Hub  
+Initial institution Masinde Muliro University of Science and Technology (MMUST)  
+Initial audience School of Information Technology students  
+Initial curriculum Year 1 Semester 1, Year 1 Semester 2, Year 2 Semester 1  
+Document purpose Define the product, functionality, architecture, workflows, quality standards and implementation instructions.
+
+======================================================================
+PART 1 INSTRUCTIONS TO OPENCODE
+======================================================================
+
+## 1. YOUR ROLE
+
+You are acting as the senior product director, software architect, full-stack engineer, database engineer, AI engineer, UIUX designer and technical lead for SIT Learning Hub.
+
+Your responsibility is to understand this entire document and turn it into a working, maintainable, production-quality application.
+
+This is not a request to generate a quick prototype or a generic dashboard.
+
+You must understand the product before changing the code.
+
+Your job is to
+- Inspect the existing project.
+- Understand the current architecture.
+- Identify existing functionality.
+- Identify incomplete functionality and bugs.
+- Preserve working code.
+- Implement the requirements in phases.
+- Test each implementation.
+- Maintain technical documentation.
+- Avoid unnecessary rewrites.
+- Report progress honestly.
+
+## 2. HOW TO USE THIS DOCUMENT
+
+Treat this document as the primary product specification and source of truth.
+
+Before coding
+
+1. Read the complete document.
+2. Inspect the existing repository.
+3. Examine the package configuration and dependencies.
+4. Inspect the current frontend and backend.
+5. Inspect the database schema and migrations.
+6. Inspect authentication and authorization.
+7. Inspect existing AI integrations.
+8. Identify existing reusable components.
+9. Identify incomplete pages and nonfunctional buttons.
+10. Compare the current implementation with this PRD.
+
+Create a requirements checklist with these statuses
+
+- Not started.
+- In progress.
+- Implemented.
+- Tested.
+- Verified.
+- Blocked.
+
+Do not mark a feature as implemented merely because a page or button exists.
+
+A feature is implemented only when its actual functionality works.
+
+A feature is verified only after appropriate testing.
+
+## 3. FIRST RESPONSE AFTER INSPECTING THE PROJECT
+
+Before making major code changes, provide
+
+A. Current project overview.
+
+B. Existing technology stack.
+
+C. Existing functionality.
+
+D. Missing functionality compared with this PRD.
+
+E. Existing bugs and technical risks.
+
+F. Recommended architecture adjustments.
+
+G. Database changes required.
+
+H. AI infrastructure requirements.
+
+I. Required environment variables and external services.
+
+J. A phased implementation roadmap.
+
+K. Any decisions that genuinely require my approval.
+
+Do not ask me questions about information already available in the repository.
+
+Do not assume the project is empty.
+
+## 4. IMPLEMENTATION RULES
+
+- Work in small, logical phases.
+- Do not rewrite the entire application unnecessarily.
+- Do not replace existing technologies without explaining why.
+- Do not delete existing working features.
+- Use reusable components.
+- Keep code modular and maintainable.
+- Use TypeScript types properly.
+- Validate inputs on the server.
+- Enforce permissions on the server.
+- Never trust frontend-only security.
+- Never allow an AI response to directly determine database permissions or academic progression.
+- Use migrations for database changes.
+- Keep secrets out of frontend code.
+- Never commit API keys.
+- Do not fabricate curriculum content.
+- Do not fabricate examination papers.
+- Do not invent successful test results.
+- Clearly label sample data and placeholders.
+- Keep documentation updated.
+
+After each phase
+1. Run type checking.
+2. Run linting.
+3. Run relevant tests.
+4. Run the build when appropriate.
+5. Fix errors.
+6. Summarise what changed.
+7. List anything still incomplete.
+
+Do not continue building on top of broken functionality without addressing the problem.
+
+======================================================================
+PART 2 PRODUCT VISION AND PURPOSE
+======================================================================
+
+## 5. PRODUCT OVERVIEW
+
+SIT Learning Hub is a university learning and career-development platform designed to help students succeed academically while developing practical skills for the professional world.
+
+The platform must go beyond traditional learning management systems.
+
+Traditional university learning often concentrates on
+- Lecture notes.
+- Videos.
+- Assignments.
+- Examinations.
+- Final grades.
+
+SIT Learning Hub must also help students
+- Understand why concepts exist.
+- Understand how systems work.
+- Apply knowledge to unfamiliar problems.
+- Use relevant professional tools.
+- Complete realistic practical activities.
+- Develop independent problem-solving abilities.
+- Build projects.
+- Document their work.
+- Develop a professional portfolio.
+- Understand possible career paths.
+- Identify their skill gaps.
+- Continue learning after university.
+
+## 6. PRODUCT PHILOSOPHY
+
+Learn to understand.
+
+Practise to master.
+
+Build to gain experience.
+
+Pass to progress.
+
+Apply your skills to your future career.
+
+The platform must not be designed exclusively around passing examinations.
+
+A student who passes an examination but cannot apply the knowledge should be able to see the practical skills they still need to develop.
+
+A student who completes a practical project but has not mastered the academic learning outcomes should also see what remains incomplete.
+
+Academic mastery, practical competence and career readiness are separate but connected dimensions.
+
+## 7. PRIMARY OBJECTIVES
+
+The platform should
+
+1. Provide structured university learning.
+2. Make difficult concepts easier to understand.
+3. Support examination preparation.
+4. Provide a reliable past-paper bank.
+5. Evaluate written answers.
+6. Create personalised study calendars.
+7. Track learning progress.
+8. Teach practical applications.
+9. Encourage project-based learning.
+10. Develop professional skills.
+11. Maintain a portfolio of completed work.
+12. Provide a persistent personal AI teacher.
+13. Provide career-development guidance.
+14. Support multiple students.
+15. Provide administrators with content-management tools.
+
+======================================================================
+PART 3 USERS AND ROLES
+======================================================================
+
+## 8. STUDENT
+
+Students can
+
+- Register and sign in.
+- Select their programme and academic year.
+- Access available semesters.
+- View units.
+- Select study durations.
+- Follow personalised learning calendars.
+- Watch learning videos.
+- Read detailed notes.
+- Create personal notes.
+- Complete exercises.
+- Submit typed answers.
+- Receive AI feedback.
+- Complete topic assessments.
+- Access examination resources.
+- Complete practical projects.
+- Track skills.
+- Maintain a career profile.
+- Build a portfolio.
+- Use the AI teacher.
+- View academic progress.
+- View practical progress.
+- Participate in leaderboards if enabled.
+
+## 9. ADMINISTRATOR
+
+Administrators can
+
+- Manage programmes.
+- Manage academic years and semesters.
+- Create and edit units.
+- Manage topics.
+- Manage learning outcomes.
+- Upload notes.
+- Upload videos and learning resources.
+- Manage exercises.
+- Manage assessments.
+- Import examination papers.
+- Review extracted questions.
+- Review duplicate questions.
+- Review curriculum mappings.
+- Manage practical projects.
+- Manage career skills.
+- Manage students.
+- Review content quality.
+- View platform analytics.
+- Manage system settings.
+
+Use role-based access control.
+
+Do not expose administrative functions to ordinary students.
+
+## 10. CONTENT REVIEWER
+
+Where useful, support a reviewer role.
+
+Reviewers may
+- Review extracted examination questions.
+- Correct OCR errors.
+- Verify diagrams.
+- Confirm question marks.
+- Review curriculum mappings.
+- Approve educational content.
+- Flag questionable resources.
+
+Reviewers should not automatically receive full administrator permissions.
+
+======================================================================
+PART 4 CURRICULUM AND ACADEMIC STRUCTURE
+======================================================================
+
+## 11. CURRICULUM STRUCTURE
+
+Use a hierarchical curriculum model
+
+Institution  
+Programme  
+Academic Year  
+Semester  
+Unit  
+Learning Outcome  
+Topic  
+Subtopic  
+Learning Resource  
+Exercise  
+Assessment  
+Practical Activity
+
+Do not hardcode the curriculum into individual page components.
+
+The database must support adding new
+- Institutions.
+- Programmes.
+- Academic years.
+- Semesters.
+- Units.
+- Topics.
+- Learning outcomes.
+- Resources.
+
+## 12. INITIAL CURRICULUM
+
+Initial scope
+
+- Year 1 Semester 1.
+- Year 1 Semester 2.
+- Year 2 Semester 1.
+
+The following units have been identified from previous timetable information and must be verified against official MMUST documentation before being published
+
+BIT 111 - Discrete Structures for IT.
+
+BIT 114 - Electronics Principles.
+
+BIT 115 - Principles of Financial Accounting.
+
+BCS 111 - Introduction to Programming.
+
+MMU 111 - Fundamentals of Digital Competency.
+
+ESM 111 - Quantitative Skills 1.
+
+MAT 121 - Differential Calculus.
+
+Do not assume this list is complete or that every unit belongs to the stated semester without verification.
+
+Store unit information as structured records.
+
+Each unit should have
+- Unit code.
+- Official unit title.
+- Programme.
+- Academic year.
+- Semester.
+- Description.
+- Learning outcomes.
+- Prerequisites.
+- Topic sequence.
+- Recommended resources.
+- Academic requirements.
+- Practical requirements.
+- Career connections.
+- Publication status.
+
+## 13. UNIT LEARNING OUTCOMES
+
+Every unit must have measurable learning outcomes.
+
+Each topic should map to one or more learning outcomes.
+
+Each assessment should also map to learning outcomes.
+
+This allows the system to identify
+- What the student has learned.
+- What remains weak.
+- Which outcomes have been assessed.
+- Which outcomes have not yet been covered.
+- Which practical skills need additional evidence.
+
+======================================================================
+PART 5 UNIT LEARNING EXPERIENCE
+======================================================================
+
+## 14. UNIT OVERVIEW
+
+When a student opens a unit, show
+
+- Unit code and title.
+- Unit description.
+- Learning outcomes.
+- Total topics.
+- Academic progress.
+- Practical progress.
+- Study calendar.
+- Recommended duration.
+- Available videos.
+- Available notes.
+- Assessments.
+- Past-paper resources.
+- Practical activities.
+- Career connections.
+
+Provide a clear action to begin or continue learning.
+
+## 15. STUDY DURATION
+
+Students should be able to choose a target duration.
+
+Examples
+- 7 days.
+- 14 days.
+- 21 days.
+- Custom duration.
+
+The system should generate a unit-level calendar.
+
+Important
+
+The calendar belongs to the entire unit.
+
+Do not create an isolated calendar for every topic.
+
+The scheduling engine should distribute
+- Topics.
+- Videos.
+- Notes.
+- Exercises.
+- Revision.
+- Practical activities.
+- Assessments.
+
+The schedule should consider
+- Number of topics.
+- Topic complexity.
+- Estimated learning time.
+- Assessment dates.
+- Student availability.
+- Selected target duration.
+
+Students must be able to
+- Reschedule missed tasks.
+- Change their deadline.
+- Pause a unit.
+- Resume a unit.
+- View completed tasks.
+- View upcoming tasks.
+
+The dashboard should combine tasks from all active unit calendars.
+
+## 16. TOPIC SEQUENCE
+
+Topics should be arranged in a logical learning sequence.
+
+Where one topic depends on another, represent that prerequisite.
+
+Do not allow students to skip mandatory prerequisites simply by manipulating frontend state.
+
+The backend must validate topic unlocking.
+
+## 17. TOPIC LEARNING STRUCTURE
+
+Each topic should include
+
+1. Topic introduction.
+2. Learning objectives.
+3. Relevant video or external resource.
+4. Detailed learning notes.
+5. Visual explanation.
+6. Simple examples.
+7. Worked examples.
+8. Advanced examples where appropriate.
+9. Real-world application.
+10. Common mistakes.
+11. Personal notes.
+12. Practice exercises.
+13. Understanding questions.
+14. Topic assessment.
+15. Feedback.
+16. Completion status.
+
+The exact learning content should depend on the subject.
+
+For example
+- Programming may include code exercises.
+- Electronics may include circuit diagrams and calculations.
+- Accounting may include financial statements and practical calculations.
+- Networking may include network diagrams and configuration labs.
+- Mathematics may include step-by-step calculations.
+
+Do not use the same generic content structure for every subject when a specialised structure would be more useful.
+
+## 18. DETAILED TEACHING STANDARD
+
+Every major concept should explain
+
+WHAT
+What is the concept
+
+WHY
+Why does it exist
+What problem does it solve
+
+HOW
+How does it work
+
+BEHIND THE SCENES
+What happens internally
+
+PRINCIPLES
+What fundamental rules govern it
+
+VISUAL EXPLANATION
+Can a diagram, flowchart, table or illustration make it easier to understand
+
+EXAMPLE
+Show a simple example.
+
+WORKED EXAMPLE
+Demonstrate the solution step by step.
+
+REAL-WORLD APPLICATION
+Where is this used outside the classroom
+
+PRACTICAL APPLICATION
+What can the student do with this knowledge
+
+COMMON MISTAKES
+What errors do beginners commonly make
+
+TRANSFER
+Can the student apply the concept to an unfamiliar problem
+
+UNDERSTANDING
+Can the student explain the concept in their own words
+
+The objective is genuine understanding, not memorisation.
+
+## 19. PERSONAL NOTES
+
+Students should be able to create their own notes.
+
+Features
+- Create notes.
+- Edit notes.
+- Delete notes.
+- Organise notes by unit and topic.
+- Save important explanations.
+- Highlight important concepts.
+- Search personal notes.
+- Access notes from the dashboard.
+
+Personal notes should remain separate from official learning material.
+
+======================================================================
+PART 6 ASSESSMENT AND PROGRESSION
+======================================================================
+
+## 20. QUESTION TYPES
+
+Support different written assessment types
+
+- Short explanations.
+- Long explanations.
+- Calculations.
+- Problem-solving.
+- Code-writing questions.
+- Diagram interpretation.
+- Diagram creation where supported.
+- Case studies.
+- Scenario-based questions.
+- Structured questions.
+- Multi-part questions.
+
+Multiple-choice questions may be used selectively, but they must not dominate the learning experience.
+
+## 21. ANSWER EVALUATION
+
+When a student submits a typed answer, the system should evaluate it using
+
+- Correctness.
+- Conceptual understanding.
+- Completeness.
+- Reasoning.
+- Method.
+- Relevant terminology.
+- Accuracy of calculations where applicable.
+
+Feedback should contain
+
+1. Score.
+2. What was correct.
+3. What was missing.
+4. What was incorrect.
+5. Why the mistake occurred.
+6. Suggested correction.
+7. Exact concept to revisit.
+8. Recommended next action.
+
+Do not simply return Correct or Wrong.
+
+For numerical questions, use deterministic validation where possible.
+
+For subjective answers, use a rubric and AI evaluation.
+
+AI grading should be treated as an assessment aid, not unquestionable truth. Provide reviewer controls for important assessment content.
+
+## 22. TOPIC PASS REQUIREMENT
+
+Minimum topic pass mark 60%.
+
+If the learner scores below 60%
+- Show feedback.
+- Recommend revision.
+- Allow another attempt.
+- Record the attempt.
+- Keep the topic locked from progression.
+
+If the learner achieves at least 60%
+- Record the successful attempt.
+- Mark the topic as passed.
+- Unlock the next eligible topic.
+
+The backend must control progression.
+
+An AI response must never be trusted as the sole authority for unlocking topics.
+
+## 23. UNIT ASSESSMENT
+
+After the required topics are completed, provide a unit assessment.
+
+The assessment should cover the unit learning outcomes.
+
+Include
+- Written questions.
+- Calculations.
+- Application questions.
+- Relevant past-paper questions.
+- Supplementary questions.
+
+Track
+- Score.
+- Attempt number.
+- Time taken where meaningful.
+- Questions answered.
+- Learning outcomes assessed.
+- Weak areas.
+
+======================================================================
+PART 7 EXAMINATION AND PAST-PAPER BANK
+======================================================================
+
+## 24. PURPOSE
+
+Create a reliable examination bank that helps students practise authentic university questions and understand recurring examination concepts.
+
+MMUST must be the primary source.
+
+Other universities may supplement the bank when their questions genuinely match the learning outcomes.
+
+Never label another institution's question as an MMUST question.
+
+## 25. SOURCE PRIORITY
+
+Primary
+- MMUST Examination Bank.
+- MMUST Library and institutional repositories.
+- Other official MMUST educational repositories.
+
+Secondary
+- Other Kenyan university repositories.
+- Recognised universities with comparable curricula.
+
+Known repositories for initial investigation
+
+MMUST Examination Bank
+httpsexambank.mmust.ac.kexmlui
+
+MMUST Library
+httpslibrary.mmust.ac.ke
+
+Meru University Examination Papers
+httpsexampapers.must.ac.ke
+
+Murang'a University Examination Bank
+httpsexambank.mut.ac.kexmlui
+
+Example MMUST ESM 111 paper
+httpsexambank.mmust.ac.kexmluibitstreamhandle1234567896585ESM%20111%20QUANTITATIVE%20SKILLS.pdfisAllowed=y&sequence=1
+
+These are starting points, not proof that all relevant papers have been found or processed.
+
+Discover actual collection structures and item identifiers.
+
+Do not import an entire repository indiscriminately.
+
+## 26. ACADEMIC YEAR FILTER
+
+Initially use the last three completed academic years.
+
+Determine completed years using the current date and actual repository metadata.
+
+Do not include an incomplete academic year simply because it has started.
+
+Store the actual academic year and examination session.
+
+Make the date range configurable by administrators.
+
+## 27. SOURCE INVENTORY
+
+Before importing documents, create a source inventory.
+
+For each source record
+- Institution.
+- Repository.
+- Collection.
+- Unit.
+- Academic year.
+- Examination session.
+- Document title.
+- Document URL or repository identifier.
+- Access status.
+- File format.
+- Import status.
+- Review status.
+
+Do not claim that a repository is fully covered until its relevant collections have actually been checked.
+
+## 28. ORIGINAL DOCUMENT PRESERVATION
+
+Keep original PDFs unchanged.
+
+Create a read-only source archive or source manifest.
+
+Extract questions into a separate structured dataset.
+
+Never destructively edit the original document.
+
+Preserve
+- Original document reference.
+- Original page numbers.
+- Question numbers.
+- Marks.
+- Relevant diagrams.
+- Tables.
+- Equations.
+- Circuits.
+- Paper instructions.
+
+Exclude irrelevant cover material from the question dataset.
+
+However, preserve paper-level instructions as metadata when they affect the examination.
+
+## 29. OCR AND QUESTION EXTRACTION
+
+Some papers may be scanned.
+
+Use OCR where needed.
+
+Extraction should
+- Identify question boundaries.
+- Identify subquestions.
+- Identify marks.
+- Identify question numbering.
+- Preserve mathematical notation.
+- Preserve tables.
+- Preserve diagrams.
+- Record original page references.
+
+Flag uncertain OCR output for manual review.
+
+Do not silently discard a diagram because text extraction failed.
+
+Use page images where necessary.
+
+## 30. QUESTION DATA MODEL
+
+A question record should support
+
+- Question ID.
+- Institution.
+- Unit.
+- Academic year.
+- Examination session.
+- Source document.
+- Source URL or repository identifier.
+- Page number.
+- Question number.
+- Subquestion identifier.
+- Question text.
+- Diagram or attachment reference.
+- Marks.
+- Learning outcomes.
+- Topics.
+- Difficulty.
+- OCR confidence.
+- Verification status.
+- Copyrightaccess notes.
+- Duplicate cluster reference.
+- Creation timestamp.
+- Reviewer information.
+
+Use a structured format that supports future search and filtering.
+
+## 31. CURRICULUM MAPPING
+
+External questions must be mapped using actual learning outcomes.
+
+Do not map questions merely because their unit titles look similar.
+
+Classify mapping confidence
+
+HIGH
+Strong alignment with verified learning outcomes.
+
+MEDIUM
+Reasonable alignment requiring reviewer confirmation.
+
+LOW
+Weak or uncertain alignment.
+
+Only approved HIGH and reviewed MEDIUM questions should enter the main examination bank.
+
+Keep LOW-confidence questions separate.
+
+## 32. DUPLICATE DETECTION
+
+Detect
+
+1. Exact duplicates.
+2. Near-verbatim repeats.
+3. Repeated concepts.
+4. Related but distinct questions.
+5. Questions that only appear similar.
+
+Use multiple techniques
+- Text normalisation.
+- Hashing.
+- String similarity.
+- Embeddings.
+- Semantic comparison.
+- Human review.
+
+Do not rely entirely on an LLM.
+
+Keep every original question occurrence.
+
+Repeated questions should be linked into clusters.
+
+Display
+- Number of occurrences.
+- Institutions.
+- Academic years.
+- Source documents.
+- Page references.
+- Similarity confidence.
+- Explanation of why they were grouped.
+
+Do not automatically delete questions because they are similar.
+
+Do not claim a repeated concept guarantees that it will appear in a future examination.
+
+## 33. ADMIN EXAMINATION REVIEW
+
+Provide an administrative workflow for
+
+- Source discovery.
+- Document import.
+- OCR processing.
+- Question extraction.
+- Extraction correction.
+- Diagram review.
+- Curriculum mapping.
+- Duplicate review.
+- Approval.
+- Rejection.
+- Manual editing.
+- Reprocessing.
+- Audit history.
+
+Keep a record of reviewer actions.
+
+## 34. EXAMINATION MODES
+
+PRACTICE MODE
+- Student may request explanations.
+- AI may guide the student.
+- AI may show worked examples.
+- AI may provide hints and feedback.
+
+MOCK MODE
+- Simulates an examination.
+- Limited hints.
+- No unrestricted answer assistance during the attempt.
+- Results shown after submission.
+
+FINAL EXAM MODE
+- Written-answer assessment.
+- No answer assistance before submission.
+- Enforce restrictions in backend logic.
+- Record answers and timestamps.
+- Lock submitted attempts according to configured rules.
+- Provide marking and explanations after submission.
+
+## 35. FINAL UNIT EXAMINATION
+
+The final examination should
+- Cover the unit learning outcomes.
+- Include appropriate authentic past-paper questions.
+- Include clearly labelled supplementary questions.
+- Preserve marks and question provenance.
+- Balance topics.
+- Avoid unnecessary repetition within the same attempt.
+- Support configured examination duration.
+- Produce detailed post-exam feedback.
+
+======================================================================
+PART 8 PRACTICAL LEARNING AND CAREER DEVELOPMENT
+======================================================================
+
+## 36. CORE PRINCIPLE
+
+Academic knowledge should connect to professional practice.
+
+A student should understand not only what a concept means, but also why an employer, engineer, accountant, developer, technician or other professional uses it.
+
+Every unit should contain
+
+WHERE THIS IS USED.
+
+CAREER CONNECTIONS.
+
+PRACTICAL ACTIVITIES.
+
+## 37. PRACTICAL ACTIVITY LEVELS
+
+Provide activities suitable for different levels
+
+BEGINNER
+Simple exercises that introduce a practical concept.
+
+INTERMEDIATE
+Activities requiring the learner to combine multiple concepts.
+
+APPLIED
+Realistic tasks that resemble professional work.
+
+PORTFOLIO
+Substantial work that can be documented as evidence of ability.
+
+Not every subject needs a software application.
+
+Examples
+
+Programming
+- Write programs.
+- Debug code.
+- Build small applications.
+- Use version control.
+
+Networking
+- Design network topologies.
+- Configure routers.
+- Troubleshoot connectivity.
+- Document network installations.
+
+Electronics
+- Interpret circuit diagrams.
+- Perform calculations.
+- Assemble and test appropriate circuits.
+- Document measurements.
+
+Accounting
+- Prepare financial statements.
+- Analyse transactions.
+- Work through business scenarios.
+- Use relevant accounting tools.
+
+Mathematics
+- Solve applied problems.
+- Interpret data.
+- Apply mathematical methods to realistic situations.
+
+## 38. PROJECT STRUCTURE
+
+Each substantial project should include
+
+- Project title.
+- Problem statement.
+- Background.
+- Objectives.
+- Requirements.
+- Tools and materials.
+- Prerequisite knowledge.
+- Instructions.
+- Milestones.
+- Expected output.
+- Acceptance criteria.
+- Testing procedure.
+- Common mistakes.
+- Reflection.
+- Final deliverable.
+- Documentation requirements.
+- Portfolio suitability.
+
+AI should guide the learner rather than automatically completing all work.
+
+## 39. CAREER PROFILE
+
+Allow students to optionally maintain
+
+- Interests.
+- Dream roles.
+- Career goals.
+- Skills.
+- Current skill levels.
+- Evidence supporting those skills.
+- Tools used.
+- Projects completed.
+- Portfolio links.
+- Internship experience.
+- Work experience.
+- Certifications.
+- Areas requiring improvement.
+- Career milestones.
+
+Do not force a student to select a specific career during registration.
+
+## 40. SKILL TRACKING
+
+Represent skills as structured records.
+
+Examples
+- Programming.
+- Database design.
+- Networking.
+- Troubleshooting.
+- Communication.
+- Documentation.
+- Problem-solving.
+- Project management.
+- Relevant software tools.
+
+Track skill development using evidence.
+
+Possible evidence
+- Completed practical exercises.
+- Reviewed projects.
+- Assessment results.
+- Demonstrations.
+- Portfolio deliverables.
+
+Do not mark a skill as mastered simply because the student viewed a video.
+
+## 41. CAREER READINESS DASHBOARD
+
+Display
+- Skills practised.
+- Tools used.
+- Completed practical activities.
+- Completed projects.
+- Portfolio evidence.
+- Weak areas.
+- Suggested next steps.
+- Career-related learning milestones.
+
+Do not create an unexplained AI employability score.
+
+Do not promise jobs or claim professional qualification without evidence.
+
+======================================================================
+PART 9 PERSISTENT AI TEACHER AND CAREER MENTOR
+======================================================================
+
+## 42. AGENT OBJECTIVE
+
+The AI agent is a central feature of SIT Learning Hub.
+
+It should function as a persistent personal teacher and career mentor.
+
+It must not behave like a generic chatbot that forgets the learner's context every time a new message is sent.
+
+## 43. AGENT INTERFACE
+
+Provide a floating assistant icon throughout the learning experience.
+
+When clicked
+- Open a contextual side panel.
+- Preserve the current page.
+- Show the current unit and topic.
+- Provide a conversation interface.
+- Allow the student to ask questions.
+- Allow the student to continue previous conversations where appropriate.
+
+The assistant should not block important learning controls.
+
+## 44. AGENT CONTEXT
+
+With appropriate permissions, the agent should access
+
+- Student profile.
+- Current semester.
+- Current unit.
+- Current topic.
+- Topic learning outcomes.
+- Approved notes.
+- Available videos and resources.
+- Previous assessment attempts.
+- Previous mistakes.
+- Learning progress.
+- Study calendar.
+- Practical projects.
+- Skills practised.
+- Career interests.
+- Relevant portfolio evidence.
+
+Only retrieve information relevant to the current request.
+
+Do not expose one student's private data to another student.
+
+## 45. AGENT CAPABILITIES
+
+The agent should be able to
+
+TEACH
+Explain difficult concepts in different ways.
+
+SIMPLIFY
+Break complex ideas into smaller steps.
+
+QUESTION
+Ask the student questions to check understanding.
+
+ASSESS
+Evaluate typed answers using approved rubrics.
+
+REVISE
+Recommend specific topics to revisit.
+
+PLAN
+Help create realistic study plans.
+
+TROUBLESHOOT
+Guide practical work and diagnose errors.
+
+PROJECT GUIDE
+Help students plan and complete projects.
+
+REVIEW
+Review documentation and portfolio evidence.
+
+CAREER MENTOR
+Explain how skills relate to career paths.
+
+REFLECT
+Help students understand their strengths and gaps.
+
+REMEMBER
+Maintain useful learning context across sessions.
+
+## 46. AGENT BEHAVIOUR
+
+The agent should
+- Encourage independent reasoning.
+- Use simple explanations when the student is confused.
+- Increase complexity gradually.
+- Use relevant examples.
+- Avoid pretending to know unverified information.
+- Distinguish official curriculum content from general explanation.
+- Admit uncertainty.
+- Avoid doing every assignment automatically.
+- Encourage the student to explain concepts in their own words.
+- Avoid claiming mastery without evidence.
+
+## 47. AGENT TECHNOLOGY
+
+Preferred initial architecture
+
+LangGraph
+Agent orchestration and controlled workflows.
+
+Groq
+Initial model inference provider.
+
+Database
+Persistent learner context and conversation state.
+
+Retrieval
+Approved curriculum notes, learning resources and unit content.
+
+Application tools
+Controlled access to permitted application functionality.
+
+Keep the model provider configurable so other providers can be added later.
+
+Do not fine-tune a model for the first release.
+
+Persistent memory should be based on structured application data and controlled retrieval, not merely a long prompt.
+
+## 48. AGENT SAFETY AND PERMISSIONS
+
+The agent must not
+- Change academic results directly.
+- Unlock topics independently.
+- Modify student roles.
+- Access other students' private records.
+- Bypass examination restrictions.
+- Execute arbitrary database operations.
+- Access secrets.
+- Claim an assessment is passed without backend confirmation.
+
+All application tools must validate permissions server-side.
+
+======================================================================
+PART 10 STUDY CALENDAR AND SCHEDULING
+======================================================================
+
+## 49. CALENDAR REQUIREMENTS
+
+Create a unit-level study calendar.
+
+Students choose a target duration.
+
+The scheduling engine distributes learning activities across that duration.
+
+Each scheduled task should have
+- Unit.
+- Topic.
+- Task type.
+- Planned date.
+- Estimated duration.
+- Status.
+- Completion timestamp.
+- Rescheduling history.
+
+Task statuses may include
+- Pending.
+- In progress.
+- Completed.
+- Missed.
+- Rescheduled.
+
+## 50. SCHEDULE ADJUSTMENTS
+
+When a student misses tasks
+- Identify the missed activities.
+- Offer an adjusted schedule.
+- Avoid creating an unrealistic workload.
+- Preserve completed work.
+- Allow manual adjustments.
+
+Students should be able to change their target completion date.
+
+The dashboard should display tasks from all active unit calendars.
+
+======================================================================
+PART 11 DASHBOARD AND ANALYTICS
+======================================================================
+
+## 51. STUDENT DASHBOARD
+
+The dashboard should include
+
+- Welcome section.
+- Current academic programme.
+- Current semester.
+- Active units.
+- Today's learning tasks.
+- Upcoming assessments.
+- Unit progress.
+- Academic performance.
+- Practical progress.
+- Career skills.
+- Recent activities.
+- Study streak.
+- AI assistant access.
+
+Make the next recommended action obvious.
+
+## 52. PROGRESS TRACKING
+
+Track
+- Units started.
+- Units completed.
+- Topics completed.
+- Topics passed.
+- Topic attempts.
+- Assessment scores.
+- Weak learning outcomes.
+- Videoresource completion.
+- Notes created.
+- Learning activities.
+- Practical activities.
+- Projects completed.
+- Portfolio evidence.
+
+Track academic and practical progress independently.
+
+## 53. LEARNING ANALYTICS
+
+Use analytics to identify
+- Frequently failed topics.
+- Concepts requiring revision.
+- Learning activities with poor completion.
+- Topics taking longer than expected.
+- Assessment performance trends.
+- Progress across learning outcomes.
+
+Do not confuse time spent on a page with actual understanding.
+
+======================================================================
+PART 12 LEADERBOARD AND GAMIFICATION
+======================================================================
+
+## 54. XP SYSTEM
+
+Potential XP rules
+
+- Complete a topic 10 XP.
+- Pass a topic 20 XP.
+- Complete a unit 50 XP.
+- Achieve at least 80% in a final assessment 20 bonus XP.
+- Maintain a qualifying learning streak 5 XP per day.
+
+These values should be configurable.
+
+Avoid awarding unlimited XP for repeated attempts or artificial activity.
+
+## 55. LEADERBOARD
+
+Possible fields
+- Rank.
+- Display name.
+- XP.
+- Units completed.
+- Average assessment score.
+- Learning streak.
+
+Provide privacy controls.
+
+Students should be able to choose what appears publicly.
+
+Prepare the database for multiple users from the beginning.
+
+Do not expose private learning records through public profiles.
+
+======================================================================
+PART 13 ADMINISTRATION AND CONTENT MANAGEMENT
+======================================================================
+
+## 56. ADMIN DASHBOARD
+
+Provide administrative views for
+- Students.
+- Programmes.
+- Semesters.
+- Units.
+- Topics.
+- Learning outcomes.
+- Learning resources.
+- Notes.
+- Videos.
+- Exercises.
+- Assessments.
+- Examination papers.
+- Extracted questions.
+- Duplicate clusters.
+- Practical projects.
+- Skills.
+- Career connections.
+- Platform analytics.
+
+## 57. CONTENT MANAGEMENT
+
+Administrators should be able to
+- Create content.
+- Edit content.
+- Save drafts.
+- Preview content.
+- Publish content.
+- Unpublish content.
+- Archive outdated content.
+- Manage content versions.
+
+Do not expose draft content as verified learning material.
+
+## 58. CONTENT QUALITY
+
+Educational content should be reviewed.
+
+Maintain
+- Content author.
+- Reviewer.
+- Version.
+- Publication status.
+- Last updated date.
+- Source information where relevant.
+
+For AI-generated educational content, clearly distinguish generated explanations from verified official course materials.
+
+======================================================================
+PART 14 DATABASE AND DATA ARCHITECTURE
+======================================================================
+
+## 59. DATABASE PRINCIPLES
+
+Use a relational, structured data model.
+
+Preferred
+- Turso.
+- SQLite-compatible schema.
+- Drizzle ORM.
+
+Inspect the existing schema before making changes.
+
+Do not create duplicate tables or conflicting relationships.
+
+## 60. EXPECTED DATA DOMAINS
+
+The schema should support the following domains.
+
+IDENTITY
+- Users.
+- Profiles.
+- Roles.
+- Permissions.
+
+CURRICULUM
+- Institutions.
+- Programmes.
+- Academic years.
+- Semesters.
+- Units.
+- Learning outcomes.
+- Topics.
+- Topic prerequisites.
+
+LEARNING
+- Resources.
+- Notes.
+- Personal notes.
+- Videos.
+- Exercises.
+- Questions.
+- Attempts.
+- Assessment results.
+
+SCHEDULING
+- Unit study plans.
+- Calendar tasks.
+- Rescheduling history.
+
+EXAMINATION BANK
+- Source repositories.
+- Source documents.
+- Extracted questions.
+- Question diagrams.
+- Question mappings.
+- Duplicate clusters.
+- Review records.
+- Examination attempts.
+
+PRACTICAL LEARNING
+- Skills.
+- Practical activities.
+- Projects.
+- Milestones.
+- Deliverables.
+- Reviews.
+- Evidence.
+
+CAREER
+- Career profiles.
+- Interests.
+- Target roles.
+- Career skills.
+- Career milestones.
+- Portfolio items.
+
+AI
+- Agent conversations.
+- Conversation messages.
+- Thread state.
+- Relevant learner context.
+- Tool execution logs.
+
+GAMIFICATION
+- XP transactions.
+- Streaks.
+- Achievements.
+- Leaderboard snapshots.
+
+ADMINISTRATION
+- Content reviews.
+- Audit logs.
+- System settings.
+
+These are logical data domains, not an instruction to create unnecessary tables blindly.
+
+Design relationships carefully.
+
+## 61. DATA INTEGRITY
+
+Use
+- Foreign keys where supported.
+- Appropriate indexes.
+- Unique constraints.
+- Input validation.
+- Database transactions where needed.
+- Soft deletion where appropriate.
+- Audit logs for important administrative actions.
+
+Do not trust values submitted by the frontend.
+
+## 62. MULTI-STUDENT SUPPORT
+
+Although the initial release may serve one learner, design for multiple students.
+
+Ensure
+- User-owned records have ownership references.
+- Administrative records have appropriate permissions.
+- Public data is intentionally exposed.
+- Private data remains private.
+- Database queries are scoped correctly.
+
+======================================================================
+PART 15 SECURITY AND PRIVACY
+======================================================================
+
+## 63. SECURITY REQUIREMENTS
+
+Implement
+- Authentication.
+- Authorization.
+- Role-based access.
+- Server-side validation.
+- Secure session handling.
+- Rate limiting where appropriate.
+- Secure API endpoints.
+- Safe file uploads.
+- Environment variable protection.
+- Error handling that does not expose secrets.
+
+## 64. AI SECURITY
+
+Treat retrieved documents and user-generated content as untrusted input.
+
+Do not allow document content to override system instructions.
+
+Do not allow arbitrary tool execution.
+
+Restrict agent tools to specific application functions.
+
+Record important tool actions.
+
+Validate tool inputs and permissions.
+
+## 65. PRIVACY
+
+Students should control personal career and portfolio information.
+
+Do not publicly expose
+- Private notes.
+- Private conversations.
+- Personal assessment attempts.
+- Sensitive profile information.
+
+Provide clear controls for public portfolio sharing.
+
+======================================================================
+PART 16 TECHNICAL ARCHITECTURE
+======================================================================
+
+## 66. PREFERRED TECHNOLOGIES
+
+Use existing working choices where possible.
+
+Preferred direction
+
+Frontend
+- Next.js.
+- TypeScript.
+- Responsive component architecture.
+
+Backend
+- Next.js server functionality or the existing backend architecture.
+- Validated API endpoints.
+- Server-side business logic.
+
+Database
+- Turso.
+- Drizzle ORM.
+
+Authentication
+- Clerk if already selected and integrated.
+- Otherwise evaluate the existing authentication implementation before changing it.
+
+AI
+- LangGraph.
+- Groq initially.
+- Configurable model provider.
+
+Deployment
+- Vercel where appropriate.
+
+Version control
+- GitHub.
+
+## 67. ARCHITECTURE PRINCIPLES
+
+Separate
+- Presentation.
+- Business logic.
+- Database access.
+- AI orchestration.
+- Content retrieval.
+- Assessment evaluation.
+- Scheduling.
+- Examination processing.
+
+Do not put all business logic inside page components.
+
+Keep AI provider calls behind a service abstraction.
+
+Keep database access in a clear repository or data-access layer.
+
+## 68. FILE AND COMPONENT ORGANISATION
+
+Follow the existing repository conventions.
+
+If the project needs a clearer structure, propose one before reorganising it.
+
+Use reusable components for
+- Navigation.
+- Dashboard widgets.
+- Unit cards.
+- Topic navigation.
+- Learning notes.
+- Assessment interfaces.
+- Progress indicators.
+- Calendar tasks.
+- AI assistant.
+- Project cards.
+- Career skill displays.
+
+======================================================================
+PART 17 UIUX REQUIREMENTS
+======================================================================
+
+## 69. DESIGN DIRECTION
+
+The product should feel like a professional modern education platform.
+
+Priorities
+- Clear information hierarchy.
+- Excellent readability.
+- Consistent spacing.
+- Responsive layouts.
+- Accessible contrast.
+- Simple navigation.
+- Focused learning screens.
+- Useful progress visualisations.
+- Consistent interaction patterns.
+
+Avoid
+- Generic admin templates.
+- Excessive gradients.
+- Unnecessary animations.
+- Too many dashboard cards.
+- Cluttered learning screens.
+- Decorative elements that interfere with reading.
+
+## 70. MAIN NAVIGATION
+
+Suggested student navigation
+
+- Dashboard.
+- My Learning.
+- My Units.
+- Study Calendar.
+- Examination Bank.
+- Practical Learning.
+- Projects.
+- Career Development.
+- My Portfolio.
+- AI Teacher.
+- Leaderboard.
+- Profile.
+- Settings.
+
+Adapt navigation to actual screen size and user role.
+
+Do not display every feature as a top-level menu item if it makes navigation confusing.
+
+## 71. LEARNING SCREEN
+
+The learning screen should prioritise the current topic.
+
+Possible layout
+- Unit and topic navigation.
+- Main learning content.
+- Progress information.
+- Contextual AI assistant.
+- Topic resources.
+- Notes.
+- Practice actions.
+
+The student should always understand
+- Which unit they are studying.
+- Which topic is active.
+- What they should learn.
+- What they should do next.
+- What remains incomplete.
+
+======================================================================
+PART 18 FILES AND LEARNING RESOURCES
+======================================================================
+
+## 72. RESOURCE MANAGEMENT
+
+Support approved resources such as
+- PDF notes.
+- Documents.
+- Videos.
+- Images.
+- Diagrams.
+- External learning links.
+- Practical instructions.
+
+Store metadata
+- Title.
+- Description.
+- Unit.
+- Topic.
+- Resource type.
+- Source.
+- File reference or URL.
+- Publication status.
+- Review status.
+
+## 73. RESOURCE VALIDATION
+
+Do not publish broken resource links.
+
+Check file access and supported formats.
+
+Do not invent links.
+
+Preserve source attribution.
+
+Respect licensing and repository access rules.
+
+======================================================================
+PART 19 TESTING AND QUALITY ASSURANCE
+======================================================================
+
+## 74. TESTING LEVELS
+
+Use appropriate tests
+
+UNIT TESTS
+Test individual business functions.
+
+INTEGRATION TESTS
+Test database interactions and service integration.
+
+END-TO-END TESTS
+Test complete student and administrator workflows.
+
+SECURITY TESTS
+Test authorization and data isolation.
+
+AI TESTS
+Test agent context, tool permissions and assessment behaviour.
+
+## 75. CRITICAL WORKFLOWS TO TEST
+
+STUDENT
+- Register.
+- Sign in.
+- Select semester.
+- Open a unit.
+- Select a study duration.
+- Generate a calendar.
+- Open a topic.
+- View learning content.
+- Create personal notes.
+- Submit an answer.
+- Receive feedback.
+- Pass a topic.
+- Unlock the next topic.
+- Complete a unit assessment.
+- View progress.
+
+EXAMINATION
+- Import a source document.
+- Extract questions.
+- Review OCR.
+- Verify question marks.
+- Map questions to outcomes.
+- Review duplicates.
+- Approve questions.
+- Start practice mode.
+- Start mock mode.
+- Complete final mode.
+- Receive post-submission feedback.
+
+PRACTICAL
+- Open a practical activity.
+- Start a project.
+- Complete milestones.
+- Submit evidence.
+- Receive review.
+- Add a portfolio item.
+
+AI
+- Open assistant.
+- Ask a contextual question.
+- Retrieve approved learning content.
+- Recall relevant learner context.
+- Guide a practical task.
+- Respect examination restrictions.
+- Refuse unauthorised actions.
+
+ADMIN
+- Create a unit.
+- Add topics.
+- Add learning resources.
+- Publish content.
+- Import examination papers.
+- Review extracted questions.
+- Manage users.
+
+======================================================================
+PART 20 DEPLOYMENT AND OPERATIONS
+======================================================================
+
+## 76. ENVIRONMENT CONFIGURATION
+
+Document all required environment variables.
+
+Examples may include
+- Database URL.
+- Database authentication token.
+- Authentication keys.
+- Groq API key.
+- AI provider configuration.
+- Application URL.
+- Storage configuration.
+
+Use the actual names required by the existing codebase.
+
+Never place secrets in frontend code or commit them to GitHub.
+
+Provide an example environment file containing placeholders only.
+
+## 77. DEPLOYMENT
+
+Before deployment
+- Run tests.
+- Run type checking.
+- Run linting.
+- Run production build.
+- Check environment variables.
+- Check database migrations.
+- Check authentication.
+- Check protected routes.
+- Check AI configuration.
+- Check file storage.
+- Check production error handling.
+
+Do not claim deployment succeeded without verifying it.
+
+======================================================================
+PART 21 IMPLEMENTATION ROADMAP
+======================================================================
+
+## 78. PHASE 0 — PROJECT AUDIT
+
+Inspect the existing repository.
+
+Deliver
+- Architecture report.
+- Existing feature inventory.
+- Missing feature list.
+- Bug list.
+- Technical risks.
+- Recommended implementation plan.
+
+Do not make major architectural changes yet.
+
+## 79. PHASE 1 — FOUNDATION
+
+Implement or verify
+- Authentication.
+- User profiles.
+- Roles and permissions.
+- Curriculum data model.
+- Database structure.
+- Application navigation.
+- Core design system.
+
+Acceptance
+A user can sign in and access the appropriate application area.
+
+## 80. PHASE 2 — CURRICULUM MANAGEMENT
+
+Implement
+- Programmes.
+- Academic years.
+- Semesters.
+- Units.
+- Learning outcomes.
+- Topics.
+- Topic prerequisites.
+- Admin curriculum management.
+
+Acceptance
+An administrator can create and manage the curriculum without hardcoding it into frontend components.
+
+## 81. PHASE 3 — LEARNING EXPERIENCE
+
+Implement
+- Unit overview.
+- Topic navigation.
+- Learning notes.
+- Resources.
+- Videos.
+- Personal notes.
+- Exercises.
+- Topic completion.
+
+Acceptance
+A student can follow a complete topic learning flow.
+
+## 82. PHASE 4 — ASSESSMENT ENGINE
+
+Implement
+- Written questions.
+- Typed answers.
+- Rubrics.
+- Assessment attempts.
+- Scoring.
+- Feedback.
+- Topic pass rules.
+- Backend topic unlocking.
+
+Acceptance
+Topic progression is enforced by the backend and cannot be bypassed through frontend manipulation.
+
+## 83. PHASE 5 — STUDY CALENDAR
+
+Implement
+- Unit-level study plans.
+- Duration selection.
+- Scheduling engine.
+- Daily tasks.
+- Rescheduling.
+- Dashboard aggregation.
+
+Acceptance
+A student can plan and manage multiple unit calendars.
+
+## 84. PHASE 6 — EXAMINATION BANK
+
+Implement
+- Repository inventory.
+- Source management.
+- Document import.
+- OCR.
+- Question extraction.
+- Curriculum mapping.
+- Duplicate detection.
+- Human review.
+- Practice and examination modes.
+
+Acceptance
+Questions have traceable sources and verified mappings before publication.
+
+## 85. PHASE 7 — PRACTICAL LEARNING
+
+Implement
+- Practical activities.
+- Projects.
+- Milestones.
+- Evidence submission.
+- Reviews.
+- Documentation.
+
+Acceptance
+Students can complete and document relevant practical work.
+
+## 86. PHASE 8 — CAREER DEVELOPMENT
+
+Implement
+- Career profiles.
+- Interests.
+- Target roles.
+- Skill map.
+- Portfolio.
+- Career connections.
+- Career readiness dashboard.
+
+Acceptance
+Students can track career-related development using actual evidence.
+
+## 87. PHASE 9 — PERSISTENT AI AGENT
+
+Implement
+- LangGraph orchestration.
+- Groq integration.
+- Context retrieval.
+- Persistent learner context.
+- Conversation history.
+- Contextual assistant UI.
+- Controlled application tools.
+- Examination mode restrictions.
+
+Acceptance
+The agent can assist a learner using authorised and relevant context across sessions without bypassing application rules.
+
+## 88. PHASE 10 — DASHBOARD AND GAMIFICATION
+
+Implement
+- Learning analytics.
+- Progress visualisations.
+- XP.
+- Streaks.
+- Achievements.
+- Leaderboard.
+- Public profile controls.
+
+Acceptance
+Students can view meaningful academic and practical progress without exposing private information.
+
+## 89. PHASE 11 — QUALITY AND DEPLOYMENT
+
+Complete
+- Testing.
+- Security review.
+- Performance review.
+- Accessibility review.
+- Documentation.
+- Deployment.
+- Monitoring.
+
+Acceptance
+The application passes agreed release checks.
+
+======================================================================
+PART 22 PRODUCT ACCEPTANCE CRITERIA
+======================================================================
+
+## 90. ACADEMIC SUCCESS
+
+A student must be able to
+- Access the correct curriculum.
+- Study a unit.
+- Learn topics in order.
+- Access detailed notes.
+- Practise using written answers.
+- Receive meaningful feedback.
+- Pass topics.
+- Unlock subsequent topics.
+- Prepare for examinations.
+- Complete a final unit assessment.
+- Review weak areas.
+
+## 91. PRACTICAL SUCCESS
+
+A student must be able to
+- See practical applications of concepts.
+- Access relevant activities.
+- Complete projects.
+- Record milestones.
+- Submit evidence.
+- Receive reviews.
+- Document work.
+- Build a portfolio.
+
+## 92. CAREER SUCCESS
+
+A student must be able to
+- Maintain career interests.
+- Explore relevant career paths.
+- Identify required skills.
+- Track skill development.
+- Identify skill gaps.
+- Connect projects to career evidence.
+
+## 93. AI SUCCESS
+
+The agent must
+- Understand current learning context.
+- Retrieve approved curriculum information.
+- Provide relevant explanations.
+- Support independent learning.
+- Remember relevant learning history.
+- Guide practical work.
+- Respect access controls.
+- Respect examination restrictions.
+
+## 94. SYSTEM SUCCESS
+
+The platform must
+- Support multiple students.
+- Protect student information.
+- Maintain structured curriculum data.
+- Support future expansion.
+- Provide reliable administration.
+- Preserve source provenance.
+- Have tested critical workflows.
+- Be maintainable.
+
+======================================================================
+PART 23 IMPORTANT PRODUCT RULES
+======================================================================
+
+## 95. NEVER COMPROMISE THESE PRINCIPLES
+
+1. Do not turn the product into an examination-only application.
+
+2. Do not treat watching a video as proof of mastery.
+
+3. Do not treat reading notes as proof of mastery.
+
+4. Do not treat AI-generated project work as proof that the student independently completed it.
+
+5. Do not treat passing an examination as proof of practical competence.
+
+6. Do not treat completing a practical project as proof of complete academic mastery.
+
+7. Do not fabricate university course content.
+
+8. Do not fabricate examination papers.
+
+9. Do not misrepresent external university questions as MMUST questions.
+
+10. Do not delete repeated questions when analysing duplicates.
+
+11. Do not allow the AI to bypass backend rules.
+
+12. Do not expose private student information.
+
+13. Do not build features that have no real working functionality.
+
+14. Do not mark unfinished functionality as complete.
+
+15. Do not sacrifice maintainability for speed.
+
+======================================================================
+PART 24 FINAL INSTRUCTIONS TO OPENCODE
+======================================================================
+
+You must use this document as the master product specification.
+
+Your first task is NOT to start generating all the code.
+
+Your first task is to inspect the existing repository and understand what is already implemented.
+
+Then
+
+1. Compare the repository with this PRD.
+2. Produce a feature-by-feature requirements checklist.
+3. Identify missing functionality.
+4. Identify technical risks.
+5. Recommend the implementation order.
+6. Identify external services and configuration required.
+7. Identify what can be implemented immediately.
+8. Identify what requires source material or my approval.
+
+After I approve the plan, begin implementation phase by phase.
+
+Maintain a project implementation document.
+
+Suggested file
+
+docsIMPLEMENTATION-STATUS.md
+
+It should contain
+- Feature.
+- Requirement.
+- Current status.
+- Files affected.
+- Tests performed.
+- Remaining work.
+- Known issues.
+
+Maintain architecture documentation.
+
+Suggested file
+
+docsARCHITECTURE.md
+
+Maintain setup documentation.
+
+Suggested file
+
+docsSETUP.md
+
+Maintain a content verification record for curriculum and examination material.
+
+Suggested file
+
+docsCONTENT-SOURCES.md
+
+Do not create duplicate documentation if equivalent documents already exist. Update existing files where appropriate.
+
+At the end of every implementation phase, provide
+
+- What was implemented.
+- How it works.
+- Files changed.
+- Database changes.
+- Tests performed.
+- Test results.
+- Known limitations.
+- What comes next.
+
+Do not move to the next major phase if critical tests are failing.
+
+If something is blocked, explain the exact reason and the action needed.
+
+The goal is not simply to produce code.
+
+The goal is to build a complete, reliable, scalable and useful university learning platform that develops both academic knowledge and real-world professional competence.
+
+END OF MASTER PRODUCT REQUIREMENTS DOCUMENT
+
