@@ -18,7 +18,7 @@ External systems:
 
 - Clerk (identity).
 - Turso/libSQL (data).
-- Groq (inference); optional LangSmith (tracing).
+- Groq (inference); Mastra observability and optional Sentry (tracing).
 - Cloudflare R2 or compatible object storage (documents/evidence).
 - MMUST and other institutional repositories (exam sources).
 - Vercel (hosting).
@@ -36,7 +36,7 @@ External systems:
 | Database | Turso (libSQL) | Local `file:` database for development; remote for deployed environments |
 | ORM | Drizzle ORM + drizzle-kit | Committed SQL migrations |
 | Auth | Clerk (`@clerk/nextjs`) | Proposed; DB is source of truth for app roles |
-| AI | LangGraph.js + `@langchain/groq` | Provider abstraction; configurable model IDs |
+| AI | Mastra + `@mastra/libsql` + Groq | Tool-using agent runtime with durable memory, workflows, guardrails, evals, and configurable model IDs |
 | Testing | Vitest + Testing Library + Playwright | Unit, integration, E2E, security, AI fixtures |
 | Object storage | Cloudflare R2 (S3-compatible) | Private bucket; local driver in development |
 | Deployment | Vercel | Region `jnb1` preferred; self-host fallback |
@@ -61,7 +61,7 @@ Rules:
 1. Page components do not contain business rules.
 2. Services never read request headers directly; callers pass an authenticated actor.
 3. Data-access functions receive filters explicitly and never trust client-supplied ownership.
-4. AI orchestration lives in `ai/`; it calls services/tools, not raw SQL.
+4. Agent orchestration lives in `src/mastra/`; agents and tools call services, not raw SQL.
 5. Long-running work lives in `jobs/` and records status in the database.
 
 ### 3.1 Proposed directory layout
@@ -98,15 +98,19 @@ src/
   services/
     identity/ curriculum/ learning/ assessment/ scheduling/
     exams/ practical/ career/ ai/ gamification/ analytics/ admin/
+  mastra/
+    index.ts                  Mastra instance, storage, agents, workflows
+    agents/                   teacher, assessor, career-mentor, planner
+    tools/                    allowlisted application tools
+    workflows/                deterministic grading, exam generation, planning
+    memory/                   learner memory schema and retrieval policy
+    prompts/                  versioned instructions
+    guardrails/               injection filters, exam-mode restrictions
   ai/
-    provider.ts               AIProvider interface
-    groq.ts                   Groq implementation
+    provider.ts               model-provider boundary and model IDs
     context.ts                learner context builder
     retrieval.ts              FTS + structured retrieval
-    graphs/                   LangGraph graphs
-    tools/                    allowlisted tools
-    prompts/                  versioned prompts
-    safety.ts                 injection filters, exam-mode restrictions
+    safety.ts                 tool and output policy shared by Mastra
   validation/                 Zod schemas by domain
   jobs/                       import-exam-bank, ocr, extract, dedupe, verify-links
 tests/
@@ -442,28 +446,36 @@ AI output is validated with Zod. Invalid output is retried once, then surfaced a
 
 ## 9. AI architecture
 
-### 9.1 Provider abstraction
+### 9.1 Agent runtime
 
-```ts
-interface AIProvider {
-  chat(input: ChatInput): Promise<ChatResult>;
-  stream(input: ChatInput): AsyncIterable<ChatChunk>;
-  structured<T>(input: StructuredInput<T>): Promise<T>;
-  health(): Promise<{ ok: boolean; model: string }>;
-}
-```
+The AI layer is a **real agent**, not a chat-completion wrapper. The chosen runtime is **Mastra**:
 
-Groq is the first implementation. Model IDs come from env. No vendor SDK outside `ai/`.
+- `Agent` provides a bounded tool-calling loop with `generate()` and `stream()`.
+- `createTool()` defines typed, allowlisted capabilities with Zod input/output schemas.
+- `Memory` provides thread history, working memory, and optional recall backed by Turso.
+- `Workflow` handles deterministic multi-step jobs (study plans, exam generation, grading).
+- Guardrails, processors, evals, tracing, and Studio support testing and production debugging.
+- `LibSQLStore` works directly with the same Turso database, so agent state does not need a second database.
 
-### 9.2 Graph design (initial)
+ADR-004 records the change from the PRD's preferred LangGraph to Mastra. LangGraph is a valid orchestration graph, but it is lower-level, and remote Turso checkpointing would require custom infrastructure. Mastra is TypeScript-native and covers the memory, tools, workflows, and Turso integration this project needs.
+
+### 9.2 Agent design
 
 ```text
-START -> load_context -> classify_intent -> retrieve_content -> plan_response
-      -> (tool_call? -> validate_permission -> execute_tool -> observe) -> compose_answer
-      -> validate_output -> persist_messages -> END
+request -> authenticate -> load permitted learner context -> build retrieval query
+        -> agent loop (reason -> choose tool or answer -> observe -> repeat, bounded)
+        -> validate output and citations -> persist messages/state -> stream response
 ```
 
-Tool calls are bounded and logged. If a tool is not permitted, the graph responds with a refusal and a safe alternative.
+The agent can:
+
+- Teach, explain, quiz, evaluate answers against rubrics, and plan study.
+- Read only the current learner's permitted profile, progress, notes, calendar, and evidence.
+- Call allowlisted tools such as `getLearnerContext`, `retrieveApprovedContent`, `createStudyTask`, `startPracticeQuiz`, and `getExamSource`.
+- Ask for confirmation before a state-changing action, and never perform direct result/role/unlock changes.
+- Stop on a step limit, a token budget, a safety refusal, or an exam-mode restriction.
+
+The floating UI is only the interface. The agent's behaviour comes from the tool graph, memory, retrieval, and server-side policy.
 
 ### 9.3 Context builder
 
@@ -590,13 +602,14 @@ Critical workflow tests are listed in [IMPLEMENTATION-STATUS.md](IMPLEMENTATION-
 | ADR-001 | Greenfield modular monolith on Next.js | Proposed |
 | ADR-002 | Turso + Drizzle, phase-gated schema | Proposed |
 | ADR-003 | Clerk for identity; DB roles for authorization | Proposed |
-| ADR-004 | LangGraph.js + Groq behind provider abstraction | Proposed |
+| ADR-004 | Mastra + Groq behind a provider boundary; agent tools, memory, and workflows | Accepted (replaces LangGraph preference) |
 | ADR-005 | Structured retrieval + FTS before embeddings | Proposed |
 | ADR-006 | Offline exam pipeline with human review | Proposed |
 | ADR-007 | R2 private storage for documents/evidence | Proposed |
 | ADR-008 | Server-authoritative progression and exam integrity | Mandatory |
 | ADR-009 | Evidence-based career readiness, no opaque AI score | Mandatory |
 | ADR-010 | Pilot one unit before full curriculum authoring | Proposed |
+| ADR-011 | The AI is a tool-using, stateful agent with server-enforced permissions; not a generic chatbot | Mandatory |
 
 ---
 

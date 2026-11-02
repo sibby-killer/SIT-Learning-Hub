@@ -36,7 +36,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | 6B | Practice/mock/final exam modes | Not started | Depends on 6A |
 | 7 | Practical learning | Not started | Storage for evidence; practical content |
 | 8 | Career development | Not started | Depends on practical evidence; privacy decisions |
-| 9 | Persistent AI agent | Not started | Groq key; phases 3-8 data; safety review |
+| 9 | Persistent AI agent | Not started | Groq key; Mastra runtime; phases 3-8 data; safety review |
 | 10 | Dashboard and gamification | Not started | Event data from earlier phases |
 | 11 | Quality and deployment | Not started | All phases; deployment/privacy decisions |
 
@@ -218,7 +218,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | AI-03 | Conversation interface with continuation of previous threads | 9 | Not started | Persistence |
 | AI-04 | Access permitted learner context (profile/programme/unit/topic/outcomes/notes/resources/attempts/progress/calendar/practical/career) | 9 | Not started | Context builder |
 | AI-05 | Retrieve only relevant info for the request | 9 | Not started | Token budget |
-| AI-06 | Teach/simplify/question/assess/revise/plan/troubleshoot/project guide/review/career mentor/reflect/remember | 9 | Not started | Graph capabilities |
+| AI-06 | Teach/simplify/question/assess/revise/plan/troubleshoot/project guide/review/career mentor/reflect/remember | 9 | Not started | Mastra agent tools/workflows |
 | AI-07 | Use approved curriculum/notes for retrieval | 9 | Not started | FTS + filters |
 | AI-08 | Persistent memory from structured data, not a long prompt | 9 | Not started | Thread state + summaries |
 | AI-09 | Encourage independent reasoning; admit uncertainty; label official vs general explanation | 9 | Not started | Prompt/eval |
@@ -227,7 +227,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | AI-12 | Respect practice/mock/final exam restrictions | 9 | Not started | Mode-aware tools |
 | AI-13 | Log tool execution and important actions | 9 | Not started | `ai_tool_logs` |
 | AI-14 | Prompt-injection defence for retrieved documents/user content | 9 | Not started | Eval fixtures |
-| AI-15 | Provider abstraction; Groq initial; configurable models | 9 | Not started | Env config |
+| AI-15 | Provider abstraction; Mastra + Groq initial; configurable models | 9 | Not started | Env config |
 | AI-16 | No fine-tuning for first release | 9 | Not started | - |
 | AI-17 | AI never fabricates mastery/progress; backend confirms | 9 | Not started | Safety rule |
 

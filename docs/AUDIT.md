@@ -35,7 +35,7 @@ Recommended approach:
 | Application source (`app/`, `src/`, `pages/`) | Not present |
 | Database schema / migrations / seeds | Not present |
 | Authentication / authorization | Not present |
-| AI integration (LangGraph / Groq / other) | Not present |
+| AI integration (Mastra / Groq / other) | Not present |
 | Tests / CI / deployment config | Not present |
 | Documentation | Only the PRD |
 | Local toolchain | Node.js 24.15.0, npm 11.12.1, Git 2.54.0, GitHub CLI not installed |
@@ -95,7 +95,7 @@ Status legend: **Not started**, **In progress**, **Implemented**, **Tested**, **
 | Practice / mock / final exam modes | Not started | 6 | Exam bank and server-side restrictions |
 | Practical activities and projects | Not started | 7 | Content authoring; storage for evidence |
 | Career profile, skills, portfolio | Not started | 8 | Privacy controls |
-| Persistent AI teacher / career mentor | Not started | 9 | Groq key; LangGraph design; context/tools |
+| Persistent AI teacher / career mentor | Not started | 9 | Groq key; Mastra agent design; context/tools |
 | AI safety, permissions, audit | Not started | 9 | Must be designed before tools are exposed |
 | XP, streaks, achievements, leaderboard | Not started | 10 | XP rules and privacy decisions |
 | Admin content management and analytics | Not started | 2+ | Grows with each phase |
@@ -160,7 +160,7 @@ There is no architecture to assess. The PRD's preferred direction is sound and a
 - Next.js + TypeScript for a single full-stack application.
 - Turso + Drizzle for a relational, SQLite-compatible schema.
 - Clerk for authentication if approved.
-- LangGraph.js + Groq behind a provider abstraction.
+- Mastra + Groq behind a provider boundary, with tools, persistent memory, and workflows.
 - Vercel for deployment.
 - GitHub for source control.
 
@@ -235,7 +235,7 @@ Alternative if Clerk is rejected: Better Auth or Auth.js with a credentials/OAut
 
 ### 6.5 AI architecture
 
-- LangGraph.js graph orchestration; Groq as initial inference provider.
+- Mastra agent orchestration; Groq as initial inference provider.
 - `AIProvider` interface with `chat`, `stream`, `structured`, and model configuration.
 - Context builder composes only the current learner's permitted data: profile, programme, unit, topic, outcomes, approved notes, resources, recent attempts, weak outcomes, calendar, practical evidence, career interests.
 - Retrieval: structured SQL filters plus SQLite FTS5 over approved content initially. Add embeddings/vector search only if evaluation shows it is needed.
@@ -288,10 +288,10 @@ Key schema decisions:
 
 | Requirement | Recommendation | Status |
 | --- | --- | --- |
-| Orchestration | `@langchain/langgraph` (JS/TS) | Not started |
-| Model provider | Groq via `@langchain/groq` | Key required |
-| Primary model | `openai/gpt-oss-120b` (production, configurable) | Verify availability/rate limits at setup |
-| Fast model | `openai/gpt-oss-20b` | Verify availability/rate limits |
+| Orchestration | Mastra (`@mastra/core`, `@mastra/libsql`, `@mastra/memory`) | Not started |
+| Model provider | Groq through Mastra's model router | Key required |
+| Primary model | `groq/openai/gpt-oss-120b` (configurable) | Verify availability/rate limits at setup |
+| Fast model | `groq/openai/gpt-oss-20b` | Verify availability/rate limits |
 | Structured output | Zod schemas; validate every model response | Not started |
 | Persistence | Database messages/thread state; no reliance on in-memory saver | Not started |
 | Retrieval | Structured SQL + FTS5 over approved content | Not started |
@@ -315,7 +315,7 @@ Immediate (Phase 1):
 Phase 4 / 9:
 
 - Groq: `GROQ_API_KEY`, `GROQ_MODEL`, `GROQ_FAST_MODEL`
-- Optional LangSmith: `LANGCHAIN_TRACING_V2`, `LANGCHAIN_API_KEY`, `LANGCHAIN_PROJECT`
+- Optional observability: Sentry; Mastra tracing is built in
 
 Phase 6-8:
 
@@ -348,7 +348,7 @@ Each phase ends with: typecheck, lint, unit/integration tests, production build 
 | 6B | Exam modes | Practice/mock/final modes, attempt restrictions, timers, answer locking, post-submission feedback | Final-mode restrictions enforced server-side; AI unavailable for answer assistance | L | 6A; exam content |
 | 7 | Practical learning | Activities by level, projects, milestones, deliverables, evidence upload, reviews, documentation | Student completes a project with milestones/evidence/review; portfolio-ready output | L | Storage; practical content |
 | 8 | Career development | Career profile, interests, target roles, skill map, evidence, portfolio, readiness dashboard, privacy | Skills linked to evidence; gaps shown; no unexplained employability score | M | Phase 7 evidence |
-| 9 | Persistent AI agent | LangGraph, Groq, context builder, retrieval, threads/messages/state, floating UI, tools, exam restrictions, audit, evaluations | Contextual help across sessions; refuses unauthorized actions; no rule bypass | XL | Groq key; phases 3-8 data; safety review |
+| 9 | Persistent AI agent | Mastra, Groq, context builder, retrieval, threads/messages/state, floating UI, tools, exam restrictions, audit, evaluations | Contextual help across sessions; refuses unauthorized actions; no rule bypass | XL | Groq key; phases 3-8 data; safety review |
 | 10 | Dashboard and gamification | Analytics, progress visualisations, XP, streaks, achievements, leaderboard, public-profile controls | Meaningful progress; private data not exposed; XP not awarded for passive activity | M | Event data from earlier phases |
 | 11 | Quality and deployment | Full test suite, security review, accessibility, performance, docs, migrations, Vercel deploy, monitoring | Release checklist passes; no critical failures; deployment verified | L | All phases; Vercel/optional services |
 
@@ -374,10 +374,10 @@ Please approve or change each item. Recommended option is listed first.
 | ID | Decision | Recommendation | Why / impact |
 | --- | --- | --- | --- |
 | D-01 | Confirm this is the correct, intentionally empty repository | Yes, build greenfield in `sibby-killer/SIT-Learning-Hub` | Avoids building in the wrong repo |
-| D-02 | Core stack | Next.js 16 (App Router), TypeScript, Tailwind CSS 4, shadcn/ui, Drizzle + Turso, Clerk, LangGraph.js + Groq, Vitest + Playwright, Vercel | Matches PRD preferences and current stable tooling |
+| D-02 | Core stack | Next.js 16 (App Router), TypeScript, Tailwind CSS 4, shadcn/ui, Drizzle + Turso, Clerk, Mastra + Groq, Vitest + Playwright, Vercel | Matches PRD preferences except the agent runtime, where Mastra is the better TypeScript/Turso fit |
 | D-03 | Authentication | Clerk Hobby initially; Pro only if MFA/branding/custom sessions needed | Fastest secure start; 50k MRU free; DB remains role source of truth |
 | D-04 | Database hosting and region | Turso Free; primary closest to Kenya (verify `turso db locations`; Johannesburg if available); Vercel `jnb1` | Low latency, generous free tier |
-| D-05 | AI model | `openai/gpt-oss-120b` primary, `openai/gpt-oss-20b` fast; configurable | Production models as of inspection date; avoid hardcoding Llama |
+| D-05 | AI runtime and models | Mastra agent runtime; `groq/openai/gpt-oss-120b` primary, `groq/openai/gpt-oss-20b` fast; configurable | Real tool-using agent with Turso memory; avoids a generic chatbot; model IDs stay in env |
 | D-06 | Document storage | Cloudflare R2 private bucket; local filesystem driver in dev | 10 GB free, free egress, better for PDFs than Vercel Blob Hobby (1 GB) |
 | D-07 | OCR approach | Local text extraction + Tesseract fallback + mandatory human review; add paid OCR only if quality fails | No key/cost initially; keeps originals and review trail |
 | D-08 | Exam source access | User provides MMUST PDFs or campus/VPN access; no indiscriminate scraping; other universities clearly labelled supplementary | MMUST bank unreachable on inspection date; licensing risk |
@@ -391,7 +391,7 @@ Please approve or change each item. Recommended option is listed first.
 | D-16 | Background processing | CLI/offline job pipeline first; add queue/worker only if needed | Avoids premature infrastructure |
 | D-17 | Access to MMUST curriculum documents | Please supply official programme structure/unit outlines if available | Required for authoritative curriculum; otherwise only draft content is possible |
 
-**Approval request:** reply with either "Approve all recommended decisions" or list the IDs you want changed, plus any answers to D-08, D-09, D-10, D-12, D-13, D-17.
+**Approval status (2026-11-02):** the user approved all recommended decisions and asked for a real agent rather than a chatbot. The agent runtime was therefore changed from LangGraph to Mastra (ADR-004); D-05 was updated accordingly. D-08, D-09, D-10, D-12, D-13, and D-17 still need the user's content/access/deployment input.
 
 ---
 

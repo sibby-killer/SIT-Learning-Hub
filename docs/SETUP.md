@@ -72,7 +72,7 @@ npm install -D drizzle-kit vitest @vitejs/plugin-react jsdom @testing-library/re
 AI dependencies are added in Phase 4/9:
 
 ```powershell
-npm install @langchain/langgraph @langchain/groq @langchain/core
+npm install @mastra/core @mastra/libsql @mastra/memory zod
 ```
 
 Storage dependencies are added in Phase 6/7:

@@ -32,7 +32,7 @@ The source of truth is:
 - Next.js (App Router) + TypeScript + Tailwind CSS
 - Turso (libSQL) + Drizzle ORM
 - Clerk for authentication
-- LangGraph.js + Groq for AI, behind a provider abstraction
+- Mastra + Groq for the agent runtime, with tools, persistent memory, workflows, and a provider abstraction
 - Vitest + Playwright for testing
 - Vercel for deployment; Cloudflare R2 for document/evidence storage
 

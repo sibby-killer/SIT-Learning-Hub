@@ -18,7 +18,7 @@ Start with these three while Phase 0/1 is being approved:
 | 4 | Cloudflare R2 | Exam PDFs/evidence from Phase 6 | 15 minutes (can wait) |
 | 5 | Vercel | Deployment/previews | 10 minutes (can wait) |
 
-Optional later: LangSmith, Upstash Redis, Sentry, a paid OCR provider.
+Optional later: Upstash Redis, Sentry, a paid OCR provider. Mastra tracing and Studio need no hosted key.
 
 ---
 
@@ -31,7 +31,7 @@ Optional later: LangSmith, Upstash Redis, Sentry, a paid OCR provider.
 | Groq | Required Phase 4/9 | Free tier / pay-as-you-go | `GROQ_API_KEY`, `GROQ_MODEL`, `GROQ_FAST_MODEL` | Yes |
 | Cloudflare R2 | Required Phase 6 | Free (10 GB) | `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_ENDPOINT` | Access keys are secret |
 | Vercel | Deployment | Hobby for personal; Pro for institutional/commercial | Set in dashboard; `NEXT_PUBLIC_APP_URL` | Project tokens are secret |
-| LangSmith | Optional Phase 9 | Free/developer | `LANGCHAIN_TRACING_V2`, `LANGCHAIN_API_KEY`, `LANGCHAIN_PROJECT` | Yes |
+| Mastra observability | Built in | Local Studio / OpenTelemetry | No additional key required | No |
 | Upstash Redis | Optional Phase 11 | Free | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Token is secret |
 | Sentry | Optional Phase 11 | Free/developer | `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_AUTH_TOKEN` | Auth token is secret; DSN is public |
 | OCR provider | Optional Phase 6 | Prefer local first | `OCR_PROVIDER`, `OCR_SPACE_API_KEY` or `GOOGLE_APPLICATION_CREDENTIALS_JSON` | Yes |
@@ -241,23 +241,15 @@ Optional later: LangSmith, Upstash Redis, Sentry, a paid OCR provider.
 
 ---
 
-## 8. LangSmith (optional AI tracing) - Phase 9
+## 8. Mastra observability - Phase 9
 
-**Use for:** tracing LangGraph runs, prompts, tool calls, latency, and token usage.
+**Use for:** tracing agent runs, prompts, tool calls, latency, and token usage.
 
-**Plan to pick:** free/developer tier; only enable if it helps debugging.
+**Plan to pick:** no hosted key is required for the initial build. Use Mastra Studio locally and OpenTelemetry/Sentry later if production tracing is needed.
 
-**Where:** https://smith.langchain.com
+**Privacy:** traces may contain prompts and learner context. Do not enable production tracing with real student data until the privacy decision is approved; redact or disable it if required.
 
-```dotenv
-LANGCHAIN_TRACING_V2=true
-LANGCHAIN_API_KEY=lsv2_...
-LANGCHAIN_PROJECT=sit-learning-hub
-```
-
-**Privacy:** tracing may send prompts and learner context to LangSmith. Do not enable it with real student data until the privacy decision is approved; redact or disable in production if required.
-
-**Status:** [ ] optional - not required for Phase 1
+**Status:** [x] built in - no key needed for Phase 1
 
 ---
 
