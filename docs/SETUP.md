@@ -1,6 +1,6 @@
 # SIT Learning Hub - Setup and Development Guide
 
-**Status:** Phase 0. The application scaffold does not exist yet. This guide defines the setup that Phase 1 will implement and the workflow every phase follows.
+**Status:** Phase 1 foundation implemented. The scaffold, database schema, migrations, auth integration, tests, CI, and Mastra scaffold exist. Live sign-in and hosted-database verification require the Turso and Clerk keys.
 
 ---
 
@@ -8,8 +8,8 @@
 
 | Tool | Version used/required | Notes |
 | --- | --- | --- |
-| Node.js | 24.x (`.nvmrc` pins 24) | Next.js 16 requires Node 20.9+ |
-| npm | 11.x | Lockfile will be committed |
+| Node.js | 24.x (`.nvmrc` pins 24) | Mastra requires Node 22.13+; use 24 |
+| npm | 11.x | Lockfile is committed |
 | Git | 2.54+ | Remote already configured |
 | Turso CLI | Latest | Install when creating the remote database |
 | Playwright browsers | Latest | Installed in Phase 1 |
@@ -31,7 +31,7 @@ git --version
 
 ---
 
-## 2. Current repository state (Phase 0)
+## 2. Current repository state (Phase 1)
 
 The repository contains:
 
@@ -40,7 +40,20 @@ README.md
 .gitignore
 .nvmrc
 .env.example
-SIT-Learning-Hub-Full-PRD-and-OpenCode-Instructions.txt
+package.json / package-lock.json
+next.config.ts / tsconfig.json / eslint.config.mjs
+drizzle.config.ts
+drizzle/
+  0000_chemical_fixer.sql
+e2e/
+  smoke.spec.ts
+src/
+  app/                      pages, auth routes, health, Clerk webhook
+  components/               brand, layout, providers, UI primitives
+  db/                       schema, client, seed
+  lib/                      env, auth, permissions, setup, utils
+  mastra/                   lazy Mastra instance and teacher agent
+  test/                     Vitest setup
 docs/
   AUDIT.md
   ARCHITECTURE.md
@@ -48,32 +61,24 @@ docs/
   CONTENT-SOURCES.md
   IMPLEMENTATION-STATUS.md
   SETUP.md
+.github/workflows/ci.yml
 ```
 
-There is no `package.json` yet. `npm install` / `npm run dev` will fail until Phase 1 is approved and implemented.
+Without keys the app runs in preview mode: public pages, setup status, student/admin previews, and the health endpoint work; sign-in and persisted data do not.
 
 ---
 
-## 3. Phase 1 scaffold (planned)
+## 3. Installed scaffold and dependencies
 
-The exact package versions will be pinned when Phase 1 starts, using the current stable releases.
-
-```powershell
-npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
-```
-
-Then add:
+The scaffold uses Next.js 16.4.3, React 19.3, TypeScript, and Tailwind CSS 4 with Turbopack. Core dependencies:
 
 ```powershell
-npm install drizzle-orm @libsql/client @clerk/nextjs zod react-hook-form @hookform/resolvers server-only
-npm install -D drizzle-kit vitest @vitejs/plugin-react jsdom @testing-library/react @testing-library/jest-dom @playwright/test
+npm install @clerk/nextjs @libsql/client @mastra/core @mastra/libsql @mastra/memory drizzle-orm zod server-only
+npm install @radix-ui/react-slot class-variance-authority clsx lucide-react tailwind-merge
+npm install -D drizzle-kit vitest @vitejs/plugin-react jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event @playwright/test tsx
 ```
 
-AI dependencies are added in Phase 4/9:
-
-```powershell
-npm install @mastra/core @mastra/libsql @mastra/memory zod
-```
+Mastra is installed in Phase 1 so the agent boundary and Turso-backed memory are part of the foundation. Agent tools, workflows, and evaluations are implemented in Phases 4 and 9.
 
 Storage dependencies are added in Phase 6/7:
 
@@ -81,7 +86,7 @@ Storage dependencies are added in Phase 6/7:
 npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
 ```
 
-Do not install all optional packages up front; add them with the phase that uses them.
+Do not install optional packages before the phase that uses them.
 
 ---
 
@@ -111,8 +116,8 @@ Phase 4/9 minimum:
 ```dotenv
 AI_PROVIDER=groq
 GROQ_API_KEY=gsk_...
-GROQ_MODEL=openai/gpt-oss-120b
-GROQ_FAST_MODEL=openai/gpt-oss-20b
+GROQ_MODEL=groq/openai/gpt-oss-120b
+GROQ_FAST_MODEL=groq/openai/gpt-oss-20b
 ```
 
 Rules:
@@ -152,13 +157,14 @@ turso db locations
 
 ### 5.3 Migrations
 
-Planned scripts:
+Scripts:
 
 ```json
 {
   "scripts": {
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx src/db/seed.ts"
   }
@@ -175,11 +181,12 @@ npm run db:seed
 
 - Commit generated migrations.
 - Test migrations against a fresh local database before applying to a remote database.
-- Never use `drizzle-kit push` against production.
+- Prefer `db:migrate`; `db:push` is for disposable local databases only. Never use `drizzle-kit push` against production.
+- The Phase 1 migration is `drizzle/0000_chemical_fixer.sql`; the local seed writes five `system_settings` rows.
 
 ---
 
-## 6. Authentication setup (Clerk, proposed)
+## 6. Authentication setup (Clerk, implemented)
 
 1. Create a Clerk application.
 2. Enable Email + Password; optionally enable Google later.
@@ -189,11 +196,12 @@ npm run db:seed
    - `https://<production-domain>`
    - Vercel preview URLs as needed.
 5. First admin: set `ADMIN_EMAILS` to your email, then run the seed/promotion script. Do not add an "admin" option to public signup.
-6. Next.js 16 uses `proxy.ts` for Clerk middleware; the scaffold will include the current Clerk integration.
+6. Next.js 16 uses `src/proxy.ts` for Clerk middleware. The integration stays inactive until both Clerk keys are present.
+7. Optional: create a Clerk webhook pointing at `/api/webhooks/clerk` and set `CLERK_WEBHOOK_SIGNING_SECRET`.
 
 ---
 
-## 7. Running the app (after Phase 1)
+## 7. Running the app
 
 ```powershell
 npm run dev
@@ -211,7 +219,7 @@ npm run test:e2e
 npm run build
 ```
 
-Recommended `package.json` scripts (added in Phase 1):
+`package.json` scripts:
 
 ```json
 {
@@ -226,6 +234,8 @@ Recommended `package.json` scripts (added in Phase 1):
     "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "db:seed": "tsx src/db/seed.ts"
   }
 }
@@ -311,8 +321,9 @@ Vercel Hobby is intended for personal, non-commercial use. Confirm the deploymen
 
 | Problem | Likely cause / action |
 | --- | --- |
-| `npm run dev` fails because no `package.json` | Phase 1 has not been implemented yet |
-| Clerk redirect loop | Check allowed origins/redirect URLs and `proxy.ts` matcher |
+| App loads but sign-in shows "not configured" | Add both Clerk keys to `.env.local` and restart |
+| Dashboard/admin shows preview mode | Add Turso + Clerk keys; preview mode is intentional without them |
+| Clerk redirect loop | Check allowed origins/redirect URLs and `src/proxy.ts` matcher |
 | Turso `AUTH_TOKEN` error | Remote URL used without a valid token; use `file:` for local dev |
 | Migrations target the wrong DB | Check `.env.local`; keep a separate production env file |
 | `SQLITE_BUSY` / write contention | Shorten transactions; avoid concurrent schema changes; retry with backoff |

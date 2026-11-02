@@ -170,6 +170,14 @@ For every published unit/topic/resource, record:
 
 Draft content must never appear as verified learning material. AI-generated explanations must be labelled and distinguished from official course materials.
 
+### 7.1 Supplementary external references
+
+| Source | URL | Status (2026-11-02) | Allowed use |
+| --- | --- | --- | --- |
+| LearnCpp.com | https://www.learncpp.com/ | Reachable; About page states the site is free to use but no explicit reuse licence was found | Link to the relevant lesson and write original explanations/exercises; do not copy, scrape, or republish its lesson text or diagrams |
+
+LearnCpp is a useful C++ reference for the programming units, but it is not an MMUST source and its content must not be presented as official curriculum. Check the site's terms again before any change from link-only use.
+
 ---
 
 ## 8. What the project owner needs to provide
@@ -198,9 +206,11 @@ Without items 1-3, real curriculum and exam-bank publication remains blocked. Th
 | 2026-11-02 | Meru exam papers reachable | https://exampapers.must.ac.ke | Transport error | Audit |
 | 2026-11-02 | MUT exam bank reachable | https://exambank.mut.ac.ke/xmlui | Reachable; 4,179 items listed | Audit |
 | 2026-11-02 | Curriculum units | PRD only | Unverified; do not publish | Audit |
+| 2026-11-02 | LearnCpp.com | https://www.learncpp.com/ | Reachable; no explicit reuse licence found | Audit |
 
 ---
 
 ## 10. Change log
 
 - **2026-11-02:** Initial source record created. No curriculum or examination content has been imported, extracted, or published.
+- **2026-11-02:** Added LearnCpp.com as a supplementary programming reference with link-only/original-notes usage.

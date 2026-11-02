@@ -8,7 +8,7 @@
 
 ## 1. Acquisition order
 
-Start with these three while Phase 0/1 is being approved:
+Start with these three before Phase 1 live verification:
 
 | Order | Service | Why now | Time needed |
 | --- | --- | --- | --- |

@@ -20,7 +20,7 @@ Recommended approach:
 3. Add the examination bank, practical learning, career development, AI agent, and gamification in the PRD order, but gate the examination bank on verified source access and licensing.
 4. Do not mass-produce curriculum or past-paper content. The platform can be built now; authoritative content and exam sources must be verified separately.
 
-**Current product implementation score:** 0 of the 11 implementation phases (1-11) are implemented. Phase 0 documentation is the only deliverable completed; user approval is still pending.
+**Current product implementation score:** Phase 0 is approved. Phase 1 (foundation) is implemented and locally verified; phases 2-11 are not started. Live sign-in and hosted-database verification remain pending the Turso and Clerk keys. The audit findings below describe the repository as it was inspected before implementation.
 
 ---
 
@@ -49,15 +49,15 @@ Recommended approach:
 
 ### 3.1 Existing technology stack
 
-None. The repository has no stack yet.
+At inspection: none. After Phase 1: Next.js 16, React 19, TypeScript, Tailwind CSS 4, Turso/libSQL, Drizzle ORM, Clerk, Mastra, Vitest, Playwright, and GitHub Actions.
 
 ### 3.2 Existing functionality
 
-None. No user can register, sign in, view a unit, take an assessment, use an AI assistant, or access an admin area.
+At inspection: none. After Phase 1: public landing/setup/legal pages, preview student and admin areas, health endpoint, conditional Clerk sign-in/up, server-side role checks, identity schema/migration, local seed, and a lazy Mastra teacher-agent scaffold. Curriculum, assessments, calendar, practical/career workflows, and the live agent remain later phases.
 
 ### 3.3 Existing working functionality that must be preserved
 
-Only the master PRD and the Phase 0 documentation pack. There is no application behaviour to preserve. From Phase 1 onward, each phase must add regression tests so future work preserves working behaviour.
+At inspection, only the master PRD and the Phase 0 documentation pack existed, so there was no application behaviour to preserve. Phase 1 now has regression coverage (unit and E2E smoke tests); every later phase must add tests so future work preserves working behaviour.
 
 ### 3.4 Non-code assets present
 
@@ -65,6 +65,7 @@ Only the master PRD and the Phase 0 documentation pack. There is no application 
 - Phase 0 documentation under `docs/`.
 - `.env.example` containing placeholders only.
 - `.gitignore`, `.nvmrc`, `README.md`.
+- Phase 1 scaffold, migration, tests, and CI (added after approval).
 
 No API keys, curriculum content, past papers, student data, or proprietary assets are present.
 
@@ -78,8 +79,8 @@ Status legend: **Not started**, **In progress**, **Implemented**, **Tested**, **
 
 | PRD area | Current status | Phase | Main gap / dependency |
 | --- | --- | --- | --- |
-| Identity, auth, roles, profiles | Not started | 1 | Auth provider decision and keys |
-| Application shell, navigation, design system | Not started | 1 | Design direction approval |
+| Identity, auth, roles, profiles | Implemented in Phase 1; live sign-in pending keys | 1 | Clerk/Turso keys; profile editing arrives with curriculum |
+| Application shell, navigation, design system | Implemented in Phase 1 | 1 | Preserve and extend in later phases |
 | Curriculum data model and admin | Not started | 2 | Official MMUST curriculum verification |
 | Unit overview, topics, notes, resources | Not started | 3 | Authoritative content; content authoring workflow |
 | Personal notes | Not started | 3 | None beyond foundation |
@@ -397,9 +398,9 @@ Please approve or change each item. Recommended option is listed first.
 
 ## 12. What can start immediately vs what is blocked
 
-### Can start immediately after approval
+### Can start immediately
 
-- Phase 1 foundation (needs Clerk + Turso keys).
+- Phase 1 foundation is implemented; live sign-in still needs Clerk + Turso keys.
 - Phase 2 schema and admin CRUD (real content can wait).
 - Phase 3 learning UI and personal notes (pilot content).
 - Phase 4 assessment engine (AI grading can use a fake provider in tests; Groq needed for real feedback).
@@ -452,11 +453,4 @@ Please approve or change each item. Recommended option is listed first.
 
 ## 15. Next step
 
-Awaiting approval of section 11. On approval, Phase 1 will:
-
-1. Scaffold the Next.js application with the approved stack.
-2. Add environment validation and CI.
-3. Add Turso/Drizzle with the identity schema and migrations.
-4. Add Clerk authentication and role-based route groups.
-5. Build the application shell and design tokens.
-6. Add the first tests, run all quality gates, commit, and push.
+Phase 0 is approved and Phase 1 is implemented locally. The next step is to confirm the Turso and Clerk keys, verify live sign-in and the hosted database, then record the Phase 1 commit/tag. Phase 2 schema and admin work can begin in parallel, but authoritative curriculum publication remains blocked on D-08, D-09, D-10, D-13, and D-17.

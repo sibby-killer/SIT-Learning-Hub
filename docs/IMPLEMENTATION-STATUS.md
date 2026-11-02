@@ -1,8 +1,8 @@
 # SIT Learning Hub - Implementation Status
 
 **Last updated:** 2026-11-02  
-**Current phase:** Phase 0 - Audit and decisions (awaiting approval)  
-**Application code:** none yet  
+**Current phase:** Phase 1 - Foundation (implemented; live auth pending keys)  
+**Application code:** Next.js scaffold, identity schema, auth integration, role guards, tests, CI, and Mastra scaffold  
 **Master specification:** [../SIT-Learning-Hub-Full-PRD-and-OpenCode-Instructions.txt](../SIT-Learning-Hub-Full-PRD-and-OpenCode-Instructions.txt)
 
 ---
@@ -26,8 +26,8 @@ A page or button existing does not count as Implemented. A feature is Implemente
 
 | Phase | Scope | Status | Gate / notes |
 | --- | --- | --- | --- |
-| 0 | Audit, checklist, architecture, setup, API-key guide, content-source record | **Implemented - awaiting approval** | Docs committed and pushed (`b480fb7`); implementation not started |
-| 1 | Foundation: scaffold, design system, env, DB, auth, roles, CI | Not started | Needs Clerk + Turso keys and stack approval |
+| 0 | Audit, checklist, architecture, setup, API-key guide, content-source record | **Implemented - approved** | Docs committed and pushed (`b480fb7`); user approved all recommended decisions |
+| 1 | Foundation: scaffold, design system, env, DB, auth, roles, CI | **Implemented - live auth pending keys** | Scaffold, schema, migration, auth integration, tests, and CI are in place; sign-in needs Clerk + Turso keys |
 | 2 | Curriculum management | Not started | Official MMUST curriculum needed for real data; draft pilot possible |
 | 3 | Learning experience | Not started | Pilot content needed |
 | 4 | Assessment engine and progression | Not started | Groq key for live AI grading; fake provider for tests |
@@ -55,7 +55,22 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | P0-07 | Content-source verification record | Implemented | [CONTENT-SOURCES.md](CONTENT-SOURCES.md) |
 | P0-08 | Git repository initialized with remote | Implemented | Local `main`; `origin` configured |
 | P0-09 | Phase 0 commit pushed to GitHub | Implemented | Commit `b480fb7` on `origin/main`; verified via `git ls-remote` and GitHub API |
-| P0-10 | User approval of decisions | **Blocked** | Awaiting response to [AUDIT.md](AUDIT.md) section 11 |
+| P0-10 | User approval of decisions | Implemented | Approved all recommended decisions on 2026-11-02; agent runtime changed to Mastra; D-08, D-09, D-10, D-12, D-13, and D-17 still need content/deployment input |
+
+---
+
+## Phase 1 verification record
+
+| Check | Result (2026-11-02) |
+| --- | --- |
+| `npm run typecheck` | Passed |
+| `npm run lint` | Passed |
+| `npm test` | 3 test files, 9 tests passed |
+| `npm run build` | Passed; 27 routes generated |
+| `npm run test:e2e` | 2 Playwright smoke tests passed |
+| Drizzle migration | `drizzle/0000_chemical_fixer.sql` generated |
+| Local database | Migration applied to `file:./.data/local.db`; 5 system settings seeded |
+| Live Clerk/Turso sign-in | Not yet verified; keys are not configured |
 
 ---
 
@@ -63,18 +78,18 @@ A page or button existing does not count as Implemented. A feature is Implemente
 
 | ID | Requirement | Phase | Status | Notes / blocker |
 | --- | --- | --- | --- | --- |
-| FND-01 | Next.js + TypeScript application scaffold | 1 | Not started | Stack approval |
-| FND-02 | Responsive application shell and student navigation | 1 | Not started | Design direction |
-| FND-03 | Admin/reviewer navigation separated from student area | 1 | Not started | Role model |
-| FND-04 | Design tokens, typography, spacing, accessible contrast | 1 | Not started | Design approval |
-| FND-05 | Environment validation and `.env.example` contract | 1 | Not started | `.env.example` exists as a planning artifact |
-| FND-06 | User registration and sign-in | 1 | Not started | Clerk keys |
-| FND-07 | User profile and programme/year selection | 1/2 | Not started | Curriculum data |
-| FND-08 | Roles: student, reviewer, administrator | 1 | Not started | DB role model |
-| FND-09 | Permission checks enforced server-side | 1 | Not started | Security tests required |
-| FND-10 | First administrator bootstrap (no public admin signup) | 1 | Not started | `ADMIN_EMAILS` decision |
-| FND-11 | Audit log for administrative actions | 1+ | Not started | Add with first admin mutation |
-| FND-12 | CI: typecheck, lint, tests, build | 1 | Not started | GitHub Actions |
+| FND-01 | Next.js + TypeScript application scaffold | 1 | Tested | Next.js 16.4.3, React 19.3, Tailwind 4; production build passes |
+| FND-02 | Responsive application shell and student navigation | 1 | Tested | `AppShell`, landing page, and E2E smoke test |
+| FND-03 | Admin/reviewer navigation separated from student area | 1 | Tested | Separate admin navigation and route area |
+| FND-04 | Design tokens, typography, spacing, accessible contrast | 1 | Implemented | Academic teal/amber palette, serif headings, CSS tokens |
+| FND-05 | Environment validation and `.env.example` contract | 1 | Tested | Zod validation plus setup tests; no secret values exposed |
+| FND-06 | User registration and sign-in | 1 | Implemented - live test pending | Clerk pages, provider, proxy, and webhook; needs Clerk keys |
+| FND-07 | User profile and programme/year selection | 1/2 | Not started | Profile page is a placeholder; curriculum data needed |
+| FND-08 | Roles: student, reviewer, administrator | 1 | Tested | Drizzle role enum and permission matrix tests |
+| FND-09 | Permission checks enforced server-side | 1 | Implemented | `requirePermission` guards admin page; broader route/service coverage arrives with features |
+| FND-10 | First administrator bootstrap (no public admin signup) | 1 | Implemented | `ADMIN_EMAILS` allowlist; no admin option in sign-up |
+| FND-11 | Audit log for administrative actions | 1+ | Not started | `audit_logs` table exists; write it with the first admin mutation |
+| FND-12 | CI: typecheck, lint, tests, build | 1 | Tested | `.github/workflows/ci.yml` includes quality and E2E jobs |
 
 ---
 
@@ -285,14 +300,14 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | QLT-06 | Accessibility review (WCAG 2.2 AA target) | 11 | Not started | axe + manual |
 | QLT-07 | Performance review | 11 | Not started | Budgets |
 | QLT-08 | Production build and deployment verification | 11 | Not started | Vercel |
-| QLT-09 | Documentation maintained every phase | 0+ | Implemented | Phase 0 docs created and pushed |
+| QLT-09 | Documentation maintained every phase | 0+ | Implemented | Phase 0 docs and Phase 1 status/verification updates |
 | QLT-10 | Monitoring/backups/runbook | 11 | Not started | Optional Sentry |
 
 ---
 
 ## Critical workflows test matrix (PRD section 75)
 
-All tests are **Not started** because no application code exists.
+Domain workflows are **Not started**. Phase 1 has a landing-page/health smoke test and unit tests for env, permissions, and utility behaviour; the workflow matrix below tracks later phases.
 
 ### Student
 
@@ -357,7 +372,8 @@ All tests are **Not started** because no application code exists.
 
 | Phase | Completed on | Commit | Tests | Notes |
 | --- | --- | --- | --- | --- |
-| 0 | 2026-11-02 | `b480fb7` | Documentation/link check; no application tests (no app code) | Pushed to `origin/main`; awaiting user approval |
+| 0 | 2026-11-02 | `b480fb7` | Documentation/link check; no application tests (no app code) | Pushed to `origin/main`; user approved all recommended decisions |
+| 1 | 2026-11-02 | `pending` | Typecheck, lint, 9 unit tests, production build, 2 Playwright smoke tests | Live sign-in pending Turso/Clerk keys; commit/tag recorded after push |
 
 ---
 
@@ -365,7 +381,7 @@ All tests are **Not started** because no application code exists.
 
 | ID | Issue | Severity | Action needed |
 | --- | --- | --- | --- |
-| B-01 | Repository is greenfield; no existing functionality | Informational | Confirm intended repo and approve build |
+| B-01 | Repository was greenfield at audit time; Phase 1 now exists | Informational | Preserve Phase 1 behaviour and keep tests passing |
 | B-02 | Official MMUST curriculum not supplied | High | Provide programme structure/unit outlines |
 | B-03 | MMUST Exam Bank unreachable from this network (2026-11-02) | High | User provides campus/VPN access or PDFs |
 | B-04 | Past-paper licensing/permission unclear | High | Confirm permission; do not publish until resolved |
@@ -373,8 +389,8 @@ All tests are **Not started** because no application code exists.
 | B-06 | Deployment/compliance decisions pending | Medium | Approve Vercel plan, privacy approach |
 | B-07 | PRD repository URLs are malformed | Low | Use corrected URLs in [CONTENT-SOURCES.md](CONTENT-SOURCES.md) |
 | B-08 | Groq model catalogue may change | Low | Keep model IDs configurable |
-| B-09 | No CI until Phase 1 | Low | Add GitHub Actions with scaffold |
-| B-10 | UI/design direction not approved | Low | Approve design direction in [AUDIT.md](AUDIT.md) |
+| B-09 | Resolved: CI added in Phase 1 | Low | Keep `.github/workflows/ci.yml` green |
+| B-10 | Resolved: design direction approved and implemented | Low | Preserve the approved academic palette and accessibility checks |
 
 ---
 

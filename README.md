@@ -6,7 +6,8 @@ The product combines structured academic learning, written-answer assessment, a 
 
 ## Project status
 
-**Phase 0 - Audit and specification: complete, awaiting approval.** The repository is currently greenfield: it contains the master PRD and the Phase 0 documentation pack. No application code, database, authentication, or AI integration exists yet. Implementation starts only after the plan is approved.
+**Phase 0 - Audit and specification: approved.**  
+**Phase 1 - Foundation: implemented and locally verified.** The repository now contains the Next.js application scaffold, design tokens, environment validation, the Turso/Drizzle identity schema and migration, Clerk integration, server-side role checks, a Mastra agent scaffold, unit/E2E smoke tests, and CI. Live sign-in and hosted-database verification remain pending the Turso and Clerk keys.
 
 See [docs/IMPLEMENTATION-STATUS.md](docs/IMPLEMENTATION-STATUS.md) for the feature-by-feature checklist.
 
@@ -22,12 +23,12 @@ The source of truth is:
 | --- | --- |
 | [docs/AUDIT.md](docs/AUDIT.md) | Phase 0 audit, gap analysis, risks, roadmap, approval decisions |
 | [docs/IMPLEMENTATION-STATUS.md](docs/IMPLEMENTATION-STATUS.md) | Requirements checklist and phase status |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Proposed stack, layers, data model, security model |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Approved stack, layers, data model, security model |
 | [docs/SETUP.md](docs/SETUP.md) | Local setup, commands, conventions, phase workflow |
 | [docs/API-KEYS.md](docs/API-KEYS.md) | Every key/service needed, where to get it, which plan to pick |
 | [docs/CONTENT-SOURCES.md](docs/CONTENT-SOURCES.md) | Curriculum and examination source verification record |
 
-## Planned stack
+## Stack
 
 - Next.js (App Router) + TypeScript + Tailwind CSS
 - Turso (libSQL) + Drizzle ORM

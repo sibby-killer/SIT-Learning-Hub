@@ -1,6 +1,6 @@
 # SIT Learning Hub - Architecture
 
-**Status:** Proposed for approval (Phase 0). No application code exists yet.  
+**Status:** Approved. Phase 1 foundation is implemented; later-phase architecture is specified but not yet built.  
 **Last updated:** 2026-11-02
 
 ---
@@ -599,16 +599,16 @@ Critical workflow tests are listed in [IMPLEMENTATION-STATUS.md](IMPLEMENTATION-
 
 | ADR | Decision | Status |
 | --- | --- | --- |
-| ADR-001 | Greenfield modular monolith on Next.js | Proposed |
-| ADR-002 | Turso + Drizzle, phase-gated schema | Proposed |
-| ADR-003 | Clerk for identity; DB roles for authorization | Proposed |
+| ADR-001 | Greenfield modular monolith on Next.js | Accepted |
+| ADR-002 | Turso + Drizzle, phase-gated schema | Accepted |
+| ADR-003 | Clerk for identity; DB roles for authorization | Accepted |
 | ADR-004 | Mastra + Groq behind a provider boundary; agent tools, memory, and workflows | Accepted (replaces LangGraph preference) |
-| ADR-005 | Structured retrieval + FTS before embeddings | Proposed |
-| ADR-006 | Offline exam pipeline with human review | Proposed |
-| ADR-007 | R2 private storage for documents/evidence | Proposed |
+| ADR-005 | Structured retrieval + FTS before embeddings | Accepted |
+| ADR-006 | Offline exam pipeline with human review | Accepted, implementation blocked on source access |
+| ADR-007 | R2 private storage for documents/evidence | Accepted |
 | ADR-008 | Server-authoritative progression and exam integrity | Mandatory |
 | ADR-009 | Evidence-based career readiness, no opaque AI score | Mandatory |
-| ADR-010 | Pilot one unit before full curriculum authoring | Proposed |
+| ADR-010 | Pilot one unit before full curriculum authoring | Accepted |
 | ADR-011 | The AI is a tool-using, stateful agent with server-enforced permissions; not a generic chatbot | Mandatory |
 
 ---
