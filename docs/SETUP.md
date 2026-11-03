@@ -325,6 +325,7 @@ Vercel Hobby is intended for personal, non-commercial use. Confirm the deploymen
 | Problem | Likely cause / action |
 | --- | --- |
 | App loads but sign-in shows "not configured" | Add both Clerk keys to `.env.local` and restart |
+| Vercel build fails on `/sign-in` with `usePathname()` outside `<Suspense>` | Keep `export const instant = false` and the `<Suspense>` wrapper around `<SignIn />` / `<SignUp />`; Clerk reads runtime path data |
 | Dashboard/admin shows preview mode | Add Turso + Clerk keys; preview mode is intentional without them |
 | Clerk redirect loop | Check allowed origins/redirect URLs and `src/proxy.ts` matcher |
 | Turso `AUTH_TOKEN` error | Remote URL used without a valid token; use `file:` for local dev |
