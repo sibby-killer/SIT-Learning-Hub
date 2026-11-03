@@ -78,7 +78,7 @@ export default function HomePage() {
             <div className="max-w-2xl">
               <Badge variant="outline" className="mb-5 bg-background/70">
                 <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-                Phase 1 foundation · preview mode
+                Phase 2 curriculum foundation - preview mode
               </Badge>
               <h1 className="font-serif text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                 A learning hub that has to prove it works.
@@ -105,7 +105,7 @@ export default function HomePage() {
                   <dt className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
                     Phase
                   </dt>
-                  <dd className="mt-1 text-2xl font-semibold text-foreground">1/11</dd>
+                  <dd className="mt-1 text-2xl font-semibold text-foreground">2/11</dd>
                 </div>
                 <div>
                   <dt className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
@@ -270,7 +270,7 @@ export default function HomePage() {
 
       <footer className="border-t border-border/80">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <p>SIT Learning Hub · Phase 1 foundation · Built for verified learning.</p>
+          <p>SIT Learning Hub - Phase 2 curriculum foundation - Built for verified learning.</p>
           <div className="flex gap-4">
             <Link href="/legal/privacy" className="hover:text-foreground">
               Privacy

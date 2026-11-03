@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { cn } from "./utils";
+import { cn, slugify } from "./utils";
 
 describe("cn", () => {
   it("merges conflicting Tailwind utilities", () => {
@@ -14,6 +14,14 @@ describe("cn", () => {
   it("supports conditional values", () => {
     expect(cn("text-sm", false && "hidden", "font-medium")).toBe(
       "text-sm font-medium",
+    );
+  });
+});
+
+describe("slugify", () => {
+  it("creates stable slugs from curriculum titles", () => {
+    expect(slugify("BIT 111 · Discrete Structures for IT")).toBe(
+      "bit-111-discrete-structures-for-it",
     );
   });
 });

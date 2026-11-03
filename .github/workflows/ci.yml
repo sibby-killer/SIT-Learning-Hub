@@ -62,5 +62,15 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
+      - name: Prepare seeded curriculum database
+        env:
+          TURSO_DATABASE_URL: file:./.data/local.db
+        run: |
+          mkdir -p .data
+          npm run db:migrate
+          npm run db:seed
+
       - name: Run smoke tests
+        env:
+          TURSO_DATABASE_URL: file:./.data/local.db
         run: npm run test:e2e

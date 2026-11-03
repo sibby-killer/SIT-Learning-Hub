@@ -7,6 +7,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { connection } from "next/server";
 
 import { AppShell } from "@/components/layout/app-shell";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,7 @@ import { isClerkConfigured, isDatabaseConfigured } from "@/lib/env";
 export const metadata = {
   title: "Admin",
 };
+export const instant = false;
 
 const tools = [
   {
@@ -53,6 +55,7 @@ const tools = [
 ];
 
 export default async function AdminPage() {
+  await connection();
   const canUseAuth = isClerkConfigured && isDatabaseConfigured;
   const user = canUseAuth ? await requirePermission("view_admin_area") : null;
 

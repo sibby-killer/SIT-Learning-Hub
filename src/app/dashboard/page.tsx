@@ -7,6 +7,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import { connection } from "next/server";
 
 import { AppShell } from "@/components/layout/app-shell";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,7 @@ import { isClerkConfigured, isDatabaseConfigured } from "@/lib/env";
 export const metadata = {
   title: "Dashboard",
 };
+export const instant = false;
 
 const modules = [
   {
@@ -57,6 +59,7 @@ const modules = [
 ];
 
 export default async function DashboardPage() {
+  await connection();
   const canUseAuth = isClerkConfigured && isDatabaseConfigured;
   const user = canUseAuth ? await requireUser() : null;
 
