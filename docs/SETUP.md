@@ -1,6 +1,6 @@
 # SIT Learning Hub - Setup and Development Guide
 
-**Status:** Phase 1 foundation implemented. The scaffold, database schema, migrations, auth integration, tests, CI, and Mastra scaffold exist. Live sign-in and hosted-database verification require the Turso and Clerk keys.
+**Status:** Phases 1-2 implemented. The scaffold, identity and curriculum schemas, migrations, seed, auth integration, admin curriculum workflow, published catalog, tests, CI, and Mastra scaffold exist. Live sign-in and browser admin mutations require the Turso and Clerk keys.
 
 ---
 
@@ -31,7 +31,7 @@ git --version
 
 ---
 
-## 2. Current repository state (Phase 1)
+## 2. Current repository state (Phase 2)
 
 The repository contains:
 
@@ -45,13 +45,15 @@ next.config.ts / tsconfig.json / eslint.config.mjs
 drizzle.config.ts
 drizzle/
   0000_chemical_fixer.sql
+  0001_fearless_deadpool.sql
 e2e/
   smoke.spec.ts
+  curriculum.spec.ts
 src/
-  app/                      pages, auth routes, health, Clerk webhook
-  components/               brand, layout, providers, UI primitives
-  db/                       schema, client, seed
-  lib/                      env, auth, permissions, setup, utils
+  app/                      pages, auth routes, health, Clerk webhook, curriculum admin
+  components/               brand, layout, providers, admin, UI primitives
+  db/                       identity + curriculum schema, client, seed
+  lib/                      env, auth, permissions, curriculum services/rules, setup, utils
   mastra/                   lazy Mastra instance and teacher agent
   test/                     Vitest setup
 docs/
@@ -100,7 +102,7 @@ Copy-Item .env.example .env.local
 
 2. Fill in the required values. See [API-KEYS.md](API-KEYS.md) for acquisition steps.
 
-Phase 1 minimum:
+Current minimum (Phases 1-2):
 
 ```dotenv
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -182,7 +184,8 @@ npm run db:seed
 - Commit generated migrations.
 - Test migrations against a fresh local database before applying to a remote database.
 - Prefer `db:migrate`; `db:push` is for disposable local databases only. Never use `drizzle-kit push` against production.
-- The Phase 1 migration is `drizzle/0000_chemical_fixer.sql`; the local seed writes five `system_settings` rows.
+- The Phase 1 migration is `drizzle/0000_chemical_fixer.sql`; Phase 2 adds `drizzle/0001_fearless_deadpool.sql`.
+- The local seed writes five `system_settings` rows plus one MMUST institution, one draft BIT programme, two academic years, three semesters, and seven draft/unverified units. Seeded curriculum is not published and cannot be published until an administrator marks the programme and unit verified; nothing is presented as official by default.
 
 ---
 

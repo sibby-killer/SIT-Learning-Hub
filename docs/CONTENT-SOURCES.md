@@ -56,6 +56,7 @@ Until then:
 
 - Seed records must be labelled `draft` / `unverified`.
 - Students must not see unverified units as official.
+- The application rejects publication of unverified programmes and units; removing verification unpublishes them.
 - The pilot unit's educational notes may be authored as clearly labelled drafts, but must not claim to be official MMUST material.
 
 **Status:** [ ] official programme structure received  [ ] unit list verified  [ ] semester mapping verified  [ ] content owner identified

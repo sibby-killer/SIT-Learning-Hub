@@ -1,6 +1,6 @@
 # SIT Learning Hub - Architecture
 
-**Status:** Approved. Phase 1 foundation is implemented; later-phase architecture is specified but not yet built.  
+**Status:** Approved. Phases 1-2 are implemented (foundation and curriculum management); later-phase architecture is specified but not yet built. Phase 2 enforces a verified-and-published gate before curriculum reaches students.  
 **Last updated:** 2026-11-02
 
 ---

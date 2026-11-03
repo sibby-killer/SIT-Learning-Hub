@@ -7,7 +7,8 @@ The product combines structured academic learning, written-answer assessment, a 
 ## Project status
 
 **Phase 0 - Audit and specification: approved.**  
-**Phase 1 - Foundation: implemented and locally verified.** The repository now contains the Next.js application scaffold, design tokens, environment validation, the Turso/Drizzle identity schema and migration, Clerk integration, server-side role checks, a Mastra agent scaffold, unit/E2E smoke tests, and CI. Live sign-in and hosted-database verification remain pending the Turso and Clerk keys.
+**Phase 1 - Foundation: implemented and locally verified.**  
+**Phase 2 - Curriculum management: implemented and locally verified.** The repository now contains the curriculum schema and migration, MMUST draft seed, server-enforced admin CRUD and publication workflow, verification gate, topic prerequisites with cycle prevention, topic-outcome mapping, audit logs, and a verified/published-only student catalog. Live sign-in and browser admin mutations remain pending the Turso and Clerk keys; seeded MMUST records are deliberately unverified drafts and cannot be published until an administrator marks them verified.
 
 See [docs/IMPLEMENTATION-STATUS.md](docs/IMPLEMENTATION-STATUS.md) for the feature-by-feature checklist.
 

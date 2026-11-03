@@ -20,7 +20,7 @@ Recommended approach:
 3. Add the examination bank, practical learning, career development, AI agent, and gamification in the PRD order, but gate the examination bank on verified source access and licensing.
 4. Do not mass-produce curriculum or past-paper content. The platform can be built now; authoritative content and exam sources must be verified separately.
 
-**Current product implementation score:** Phase 0 is approved. Phase 1 (foundation) is implemented and locally verified; phases 2-11 are not started. Live sign-in and hosted-database verification remain pending the Turso and Clerk keys. The audit findings below describe the repository as it was inspected before implementation.
+**Current product implementation score:** Phase 0 is approved. Phases 1 (foundation) and 2 (curriculum management) are implemented and locally verified; phases 3-11 are not started. Live sign-in, hosted-database, and browser admin-mutation verification remain pending the Turso and Clerk keys. The audit findings below describe the repository as it was inspected before implementation.
 
 ---
 
@@ -453,4 +453,4 @@ Please approve or change each item. Recommended option is listed first.
 
 ## 15. Next step
 
-Phase 0 is approved and Phase 1 is implemented locally. The next step is to confirm the Turso and Clerk keys, verify live sign-in and the hosted database, then record the Phase 1 commit/tag. Phase 2 schema and admin work can begin in parallel, but authoritative curriculum publication remains blocked on D-08, D-09, D-10, D-13, and D-17.
+Phase 0 is approved, Phase 1 is tagged, and Phase 2 curriculum management is implemented locally. The next step is to confirm the Turso and Clerk keys, verify live sign-in, run the curriculum admin create/publish workflow in the browser, and apply the migrations to the hosted database. Phase 3 can begin with draft pilot content, but authoritative curriculum publication and examination-bank work remain blocked on D-08, D-09, D-10, D-13, and D-17.

@@ -1,8 +1,8 @@
 # SIT Learning Hub - Implementation Status
 
 **Last updated:** 2026-11-02  
-**Current phase:** Phase 1 - Foundation (implemented; live auth pending keys)  
-**Application code:** Next.js scaffold, identity schema, auth integration, role guards, tests, CI, and Mastra scaffold  
+**Current phase:** Phase 2 - Curriculum management (implemented; live admin pending keys)  
+**Application code:** Next.js scaffold, identity and curriculum schemas, auth and role guards, curriculum admin, published student catalog, tests, CI, and Mastra scaffold  
 **Master specification:** [../SIT-Learning-Hub-Full-PRD-and-OpenCode-Instructions.txt](../SIT-Learning-Hub-Full-PRD-and-OpenCode-Instructions.txt)
 
 ---
@@ -28,7 +28,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | --- | --- | --- | --- |
 | 0 | Audit, checklist, architecture, setup, API-key guide, content-source record | **Implemented - approved** | Docs committed and pushed (`b480fb7`); user approved all recommended decisions |
 | 1 | Foundation: scaffold, design system, env, DB, auth, roles, CI | **Implemented - live auth pending keys** | Scaffold, schema, migration, auth integration, tests, and CI are in place (`e75f2ae`); sign-in needs Clerk + Turso keys |
-| 2 | Curriculum management | Not started | Official MMUST curriculum needed for real data; draft pilot possible |
+| 2 | Curriculum management | **Implemented - live admin pending keys** | Schema, migration, seed, services, admin CRUD/status workflow, prerequisites, outcome mapping, verification gate, and verified/published catalog are in place; MMUST seed remains draft/unverified |
 | 3 | Learning experience | Not started | Pilot content needed |
 | 4 | Assessment engine and progression | Not started | Groq key for live AI grading; fake provider for tests |
 | 5 | Study calendar | Not started | Scheduling rules approval |
@@ -74,6 +74,24 @@ A page or button existing does not count as Implemented. A feature is Implemente
 
 ---
 
+## Phase 2 verification record
+
+| Check | Result (2026-11-02) |
+| --- | --- |
+| `npm run typecheck` | Passed |
+| `npm run lint` | Passed |
+| `npm test` | 5 test files, 22 tests passed |
+| `npm run build` | Passed; 28 pages generated |
+| `npm run test:e2e` | 4 Playwright tests passed with a seeded local database; curriculum tests skip without `TURSO_DATABASE_URL` |
+| Drizzle migration | `drizzle/0001_fearless_deadpool.sql` generated and applied |
+| Local seed | 1 institution, 1 programme, 2 academic years, 3 semesters, 7 draft units |
+| Cycle prevention | Unit-tested and integration-tested; direct and indirect cycles rejected |
+| Published catalog | Integration-tested: unit stays hidden until programme, year, semester, and unit are published and programme/unit are verified |
+| Verification gate | Integration-tested: publishing unverified content is rejected; removing unit verification unpublishes it |
+| Admin browser mutations | Not live-verified; requires Clerk + Turso keys |
+
+---
+
 ## 1. Foundation and identity
 
 | ID | Requirement | Phase | Status | Notes / blocker |
@@ -88,7 +106,7 @@ A page or button existing does not count as Implemented. A feature is Implemente
 | FND-08 | Roles: student, reviewer, administrator | 1 | Tested | Drizzle role enum and permission matrix tests |
 | FND-09 | Permission checks enforced server-side | 1 | Implemented | `requirePermission` guards admin page; broader route/service coverage arrives with features |
 | FND-10 | First administrator bootstrap (no public admin signup) | 1 | Implemented | `ADMIN_EMAILS` allowlist; no admin option in sign-up |
-| FND-11 | Audit log for administrative actions | 1+ | Not started | `audit_logs` table exists; write it with the first admin mutation |
+| FND-11 | Audit log for administrative actions | 1+ | Implemented | Curriculum create/update/status/prerequisite/mapping actions write `audit_logs` rows with actor and metadata |
 | FND-12 | CI: typecheck, lint, tests, build | 1 | Tested | `.github/workflows/ci.yml` includes quality and E2E jobs |
 
 ---
@@ -97,18 +115,18 @@ A page or button existing does not count as Implemented. A feature is Implemente
 
 | ID | Requirement | Phase | Status | Notes / blocker |
 | --- | --- | --- | --- | --- |
-| CUR-01 | Institution records | 2 | Not started | MMUST record |
-| CUR-02 | Programme records | 2 | Not started | Programme code/title to verify |
-| CUR-03 | Academic year and semester records | 2 | Not started | MMUST calendar to verify |
-| CUR-04 | Unit records with code, title, description, credits, requirements, career connections | 2 | Not started | Official curriculum needed for publication |
-| CUR-05 | Learning outcomes per unit | 2 | Not started | Official outcomes needed |
-| CUR-06 | Topics, subtopics, sequencing | 2 | Not started | Content authoring |
-| CUR-07 | Topic prerequisites with cycle prevention | 2/3 | Not started | Service + tests |
-| CUR-08 | Topic-to-outcome and assessment-to-outcome mapping | 2/4 | Not started | Depends on outcomes |
-| CUR-09 | Admin create/edit/save draft/preview/publish/unpublish/archive | 2 | Not started | Versioning |
-| CUR-10 | Student catalog shows only published curriculum | 2 | Not started | No hardcoded curriculum |
-| CUR-11 | Seed MMUST institution/programme and draft units clearly labelled unverified | 2 | Not started / **Blocked** | Official docs; do not publish unverified |
-| CUR-12 | Content author/reviewer/version/publication metadata | 2 | Not started | Content review workflow |
+| CUR-01 | Institution records | 2 | Tested | CRUD service, admin form, audit log, seed MMUST record |
+| CUR-02 | Programme records | 2 | Tested | Programme hierarchy, draft default, unverified label, parent status workflow |
+| CUR-03 | Academic year and semester records | 2 | Tested | Year/semester records, current flag, statuses, parent status workflow |
+| CUR-04 | Unit records with code, title, description, credits, requirements, career connections | 2 | Tested | Unit editor and versioned updates; official MMUST content still pending |
+| CUR-05 | Learning outcomes per unit | 2 | Tested | Create/edit outcomes; publication requires at least one |
+| CUR-06 | Topics, subtopics, sequencing | 2 | Tested | Parent-topic hierarchy, sort order, create/edit topic metadata |
+| CUR-07 | Topic prerequisites with cycle prevention | 2/3 | Tested | Service rejects self, cross-unit, duplicate, direct, and indirect cycles; backend rules are unit-tested |
+| CUR-08 | Topic-to-outcome and assessment-to-outcome mapping | 2/4 | Implemented | Topic-outcome mapping works; assessment mapping waits for Phase 4 |
+| CUR-09 | Admin create/edit/save draft/preview/publish/unpublish/archive | 2 | Implemented | Admin tree, unit/content editor, status/verification controls, readiness checks, audit log; parent metadata edit screens and live browser mutation pending |
+| CUR-10 | Student catalog shows only published curriculum | 2 | Tested | `/learning` queries verified units through verified/published parents; integration and E2E tested |
+| CUR-11 | Seed MMUST institution/programme and draft units clearly labelled unverified | 2 | Implemented | Seeded records are draft/unverified; publishing unverified content is rejected |
+| CUR-12 | Content author/reviewer/version/publication metadata | 2 | Implemented | Unit version/createdBy/reviewedBy/publishedAt, verification status/audit, topic/outcome versions |
 
 ---
 
@@ -374,6 +392,7 @@ Domain workflows are **Not started**. Phase 1 has a landing-page/health smoke te
 | --- | --- | --- | --- | --- |
 | 0 | 2026-11-02 | `b480fb7` | Documentation/link check; no application tests (no app code) | Pushed to `origin/main`; user approved all recommended decisions |
 | 1 | 2026-11-02 | `e75f2ae` | Typecheck, lint, 9 unit tests, production build, 2 Playwright smoke tests | Live sign-in pending Turso/Clerk keys; tagged `phase-1` |
+| 2 | 2026-11-02 | `340f7db` | Typecheck, lint, 22 unit/integration tests, production build, 4 Playwright tests | Curriculum admin, verification gate, and verified/published catalog implemented; live admin mutations pending keys; seed is draft/unverified |
 
 ---
 
@@ -381,11 +400,13 @@ Domain workflows are **Not started**. Phase 1 has a landing-page/health smoke te
 
 | ID | Issue | Severity | Action needed |
 | --- | --- | --- | --- |
-| B-01 | Repository was greenfield at audit time; Phase 1 now exists | Informational | Preserve Phase 1 behaviour and keep tests passing |
+| B-01 | Repository was greenfield at audit time; Phases 1-2 now exist | Informational | Preserve working behaviour and keep tests passing |
 | B-02 | Official MMUST curriculum not supplied | High | Provide programme structure/unit outlines |
 | B-03 | MMUST Exam Bank unreachable from this network (2026-11-02) | High | User provides campus/VPN access or PDFs |
 | B-04 | Past-paper licensing/permission unclear | High | Confirm permission; do not publish until resolved |
 | B-05 | No provider keys yet | Medium | Create Turso, Clerk, Groq keys per [API-KEYS.md](API-KEYS.md) |
+| B-11 | Curriculum admin mutations are service-tested but not live-verified in the browser | Medium | Configure Clerk/Turso, sign in as an allowlisted admin, and exercise create/publish flows |
+| B-12 | Institution/programme/year/semester metadata edit screens are not exposed yet | Low | Add edit forms if correcting parent records becomes necessary before Phase 3 |
 | B-06 | Deployment/compliance decisions pending | Medium | Approve Vercel plan, privacy approach |
 | B-07 | PRD repository URLs are malformed | Low | Use corrected URLs in [CONTENT-SOURCES.md](CONTENT-SOURCES.md) |
 | B-08 | Groq model catalogue may change | Low | Keep model IDs configurable |
