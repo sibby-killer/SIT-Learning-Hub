@@ -1,5 +1,6 @@
 import { SignIn } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { SetupRequired } from "@/components/auth/setup-required";
 import { isClerkConfigured } from "@/lib/env";
@@ -7,6 +8,8 @@ import { isClerkConfigured } from "@/lib/env";
 export const metadata: Metadata = {
   title: "Sign in",
 };
+
+export const instant = false;
 
 export default function SignInPage() {
   if (!isClerkConfigured) {
@@ -20,7 +23,13 @@ export default function SignInPage() {
 
   return (
     <main className="grid min-h-screen place-items-center px-4 py-12">
-      <SignIn />
+      <Suspense
+        fallback={
+          <p className="text-sm text-muted-foreground">Loading sign-in...</p>
+        }
+      >
+        <SignIn />
+      </Suspense>
     </main>
   );
 }
